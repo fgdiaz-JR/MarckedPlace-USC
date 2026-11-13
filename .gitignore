@@ -1,0 +1,28 @@
+# Guías técnicas para equipos externos (Excluidas por instrucción de entrega)
+guias_equipos/
+GUIA_EQUIPO_*.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.env
+
+# Entornos virtuales y dependencias
+node_modules/
+dist/
+build/
+
+# Archivos temporales de clonación
+temp_styles/
+
+# Sistema y logs
+.DS_Store
+Thumbs.db
+*.log
+

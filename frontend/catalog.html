@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Catálogo de Productos</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- Barra lateral de navegación -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+      </div>
+      <span class="side-label">Exploración</span>
+      <nav class="nav">
+        <a href="catalog.html" class="active"><button class="active" style="width:100%; text-align:left;">Catálogo General</button></a>
+        <a href="cart.html"><button style="width:100%; text-align:left;">Mi Carrito <span class="badge-count" id="sidebarCartBadge" style="margin-left:auto; display:none;">0</span></button></a>
+        <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
+        <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
+        <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones <span class="badge-count" id="sidebarNotifBadge" style="margin-left:auto; display:none;">0</span></button></a>
+      </nav>
+      
+      <span class="side-label" style="margin-top:20px;">Gestión Especial</span>
+      <nav class="nav">
+        <a href="seller-dashboard.html"><button style="width:100%; text-align:left;">Panel Vendedor</button></a>
+        <a href="admin-accounting.html"><button style="width:100%; text-align:left;">Contabilidad & Escrow</button></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        Universidad Santiago de Cali<br>
+        <strong style="color: var(--brand)">Construcción de Software II</strong>
+      </div>
+    </aside>
+
+    <!-- Área principal -->
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <b>Catálogo de Productos</b>
+          <span>Artículos académicos y tecnología universitaria</span>
+        </div>
+
+        <div class="top-actions">
+          <button class="theme-toggle-btn icon-btn" aria-label="Cambiar tema">☾</button>
+          
+          <a href="notifications.html" class="icon-btn" aria-label="Notificaciones" style="text-decoration:none; position:relative;">
+            🔔
+            <span class="badge-count" id="notifBadge" style="position:absolute; top:-4px; right:-4px; display:none;">0</span>
+          </a>
+
+          <a href="cart.html" class="icon-btn" aria-label="Ver Carrito" style="text-decoration:none; position:relative;">
+            🛒
+            <span class="badge-count" id="cartBadge" style="position:absolute; top:-4px; right:-4px; display:none;">0</span>
+          </a>
+
+          <div class="avatar" id="headerAvatar">US</div>
+          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+          <span class="badge badge-soft" id="headerRoleBadge">COMPRADOR</span>
+
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Banner de bienvenida y regla de envío gratis -->
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">Equipo 7: Catálogo & Equipo 4: Inventario</span>
+            <h1>Encuentra lo que necesitas para tu carrera.</h1>
+            <p class="lead">Aprovecha <strong>envío gratis</strong> en compras superiores a $200.000 COP (Tasa estándar: $15.000 COP, IVA 19% incluido en checkout).</p>
+          </div>
+          <div class="page-actions">
+            <a href="cart.html" class="btn btn-primary">Ir al Carrito (<span id="cartCountBtn">0</span>)</a>
+          </div>
+        </div>
+
+        <!-- Barra de Búsqueda y Filtros Dinámicos -->
+        <div class="card" style="padding: 16px 20px; margin-bottom: 24px;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+            <div style="flex: 2; min-width: 240px;">
+              <input type="text" id="searchInput" placeholder="🔍 Buscar por nombre o descripción..." style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+            </div>
+
+            <div style="flex: 1; min-width: 170px;">
+              <select id="categoryFilter" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+                <option value="">Todas las Categorías</option>
+              </select>
+            </div>
+
+            <div style="flex: 1; min-width: 160px;">
+              <select id="sortFilter" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+                <option value="recent">Más recientes</option>
+                <option value="price_asc">Precio: Menor a Mayor</option>
+                <option value="price_desc">Precio: Mayor a Menor</option>
+                <option value="name_asc">Nombre: A - Z</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-soft" id="clearFiltersBtn">Limpiar Filtros</button>
+          </div>
+        </div>
+
+        <!-- Estado de carga y mensajes -->
+        <div id="catalogLoading" style="text-align: center; padding: 40px;">
+          <p style="color: var(--muted); font-size: 15px;">Cargando catálogo en tiempo real desde Supabase...</p>
+        </div>
+
+        <div id="catalogEmpty" style="display: none; text-align: center; padding: 60px 20px; background: var(--surface); border: 1px dashed var(--line); border-radius: 15px;">
+          <h3>No se encontraron productos</h3>
+          <p class="muted">Intenta ajustando los filtros de búsqueda o categoría.</p>
+        </div>
+
+        <!-- Grilla de Tarjetas de Productos -->
+        <div class="product-grid" id="productGrid"></div>
+      </main>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart-store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/modules/catalog.js"></script>
+</body>
+</html>
+

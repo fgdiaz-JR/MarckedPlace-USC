@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Panel Vendedor & Repartidor</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+      </div>
+      <span class="side-label">Panel Operativo</span>
+      <nav class="nav">
+        <a href="seller-dashboard.html" class="active"><button class="active" style="width:100%; text-align:left;">Dashboard Vendedor</button></a>
+        <a href="catalog.html"><button style="width:100%; text-align:left;">Ir a Vista Comprador</button></a>
+        <a href="admin-accounting.html"><button style="width:100%; text-align:left;">Finanzas & Escrow</button></a>
+        <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones</button></a>
+      </nav>
+      <div class="sidebar-footer">
+        Universidad Santiago de Cali<br>
+        <strong style="color: var(--brand)">Rol Dual: Vendedor / Repartidor</strong>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <b>Panel de Gestión de Ventas y Reparto</b>
+          <span>Administración de inventario, despacho de guías y saldo Escrow</span>
+        </div>
+        <div class="top-actions">
+          <button class="theme-toggle-btn icon-btn">☾</button>
+          <div class="avatar" id="headerAvatar">VE</div>
+          <span style="font-size:13px; font-weight:700;" id="headerUserName">Vendedor USC</span>
+          <span class="badge badge-warning" id="headerRoleBadge">VENDEDOR / REPARTIDOR</span>
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">Operación Comercial & Logística</span>
+            <h1>Centro de Control del Vendedor</h1>
+            <p class="lead">Publica artículos, monitorea el stock mínimo, gestiona entregas con evidencia y revisa tus saldos.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" id="openNewProductModalBtn">+ Nuevo Producto</button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Métricas Rápidas -->
+        <div class="kpi-grid">
+          <article class="card kpi">
+            <span class="kpi-label">Productos Activos</span>
+            <div class="kpi-value" id="kpiProducts">0</div>
+            <span class="trend up">En catálogo USC</span>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Órdenes por Despachar</span>
+            <div class="kpi-value" id="kpiOrdersPending" style="color: var(--warning)">0</div>
+            <span class="trend down">Requieren empaque o envío</span>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Saldo en Custodia (Escrow)</span>
+            <div class="kpi-value" id="kpiEscrow" style="color: var(--brand); font-size:22px;">$ 0</div>
+            <span class="trend up">Retención hasta entrega + 72h</span>
+          </article>
+          <article class="card kpi">
+            <span class="kpi-label">Saldo Disponible</span>
+            <div class="kpi-value" id="kpiBalance" style="color: var(--success); font-size:22px;">$ 0</div>
+            <span class="trend up">Neto disponible para retiro</span>
+          </article>
+        </div>
+
+        <!-- Pestañas de Gestión -->
+        <div class="role-cards" style="margin: 24px 0 16px;">
+          <button type="button" class="role-card active dash-tab" data-tab="tabProducts">
+            <b>📦 Mi Inventario de Productos</b>
+            <span>Precios, existencias y alertas de stock bajo</span>
+          </button>
+          <button type="button" class="role-card dash-tab" data-tab="tabLogistics">
+            <b>🚚 Logística de Despachos & Reparto</b>
+            <span>Generar guías, cambiar estados y registrar entrega física</span>
+          </button>
+        </div>
+
+        <!-- Contenido Tab 1: Inventario -->
+        <div id="tabProducts" class="tab-pane">
+          <div class="card panel">
+            <div class="panel-head">
+              <h2>Artículos Publicados</h2>
+              <span class="muted" id="inventoryCount">0 productos registrados</span>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>SKU</th>
+                    <th>Nombre</th>
+                    <th>Precio COP</th>
+                    <th>Stock Actual</th>
+                    <th>Estado Stock</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="sellerProductsTable">
+                  <tr>
+                    <td colspan="6" style="text-align:center; padding:30px; color:var(--muted);">
+                      Cargando inventario desde Supabase...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenido Tab 2: Despacho y Reparto -->
+        <div id="tabLogistics" class="tab-pane" style="display: none;">
+          <div class="card panel">
+            <div class="panel-head">
+              <h2>Órdenes Recibidas para Despacho</h2>
+              <span class="muted">Cambia el estado conforme preparas y entregas en el campus</span>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>N° Orden</th>
+                    <th>Destino</th>
+                    <th>Total</th>
+                    <th>Estado Pedido</th>
+                    <th>Acción Logística (Repartidor)</th>
+                  </tr>
+                </thead>
+                <tbody id="sellerOrdersTable">
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">
+                      Cargando órdenes recibidas...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <!-- Modal para Crear Nuevo Producto -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Publicar Nuevo Producto</h3>
+        <button type="button" class="icon-btn" id="closeProductModalBtn">&times;</button>
+      </div>
+      <form id="newProductForm">
+        <label class="field">
+          SKU / Código Único
+          <input type="text" id="pSku" placeholder="Ej. LAP-USC-001" required>
+        </label>
+        <label class="field">
+          Nombre del Producto
+          <input type="text" id="pNombre" placeholder="Ej. Calculadora Científica FX-991" required>
+        </label>
+        <label class="field">
+          Categoría
+          <select id="pCategoria" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; background:var(--canvas); color:var(--ink);" required></select>
+        </label>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <label class="field">
+            Precio COP
+            <input type="number" id="pPrecio" min="100" placeholder="Ej. 120000" required>
+          </label>
+          <label class="field">
+            Stock Inicial
+            <input type="number" id="pStock" min="0" placeholder="Ej. 15" required>
+          </label>
+        </div>
+        <label class="field">
+          URL de la Imagen (JPG/PNG < 2MB)
+          <input type="url" id="pImagen" placeholder="https://ejemplo.com/foto.jpg">
+        </label>
+        <label class="field">
+          Descripción del Artículo
+          <textarea id="pDesc" rows="3" style="width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; background:var(--canvas); color:var(--ink);" placeholder="Estado, especificaciones, garantía universitaria..."></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;" id="saveProductBtn">
+          Publicar en Catálogo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!Auth.requireAuth(["VENDEDOR", "ADMIN"])) return;
+      UI.initHeader("seller");
+
+      const user = Auth.getUser();
+
+      // Pestañas
+      const tabs = document.querySelectorAll(".dash-tab");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          tabs.forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          document.querySelectorAll(".tab-pane").forEach(p => p.style.display = "none");
+          document.querySelector(`#${tab.dataset.tab}`).style.display = "block";
+        });
+      });
+
+      // Cargar productos del vendedor
+      async function loadSellerData() {
+        try {
+          // Consultar productos
+          const prods = await API.supabaseTable("inv_productos", `?vendedor_id=eq.${user.id}&order=creado_en.desc`);
+          const products = Array.isArray(prods) ? prods : [];
+          document.querySelector("#kpiProducts").textContent = products.length;
+          document.querySelector("#inventoryCount").textContent = `${products.length} productos`;
+
+          const table = document.querySelector("#sellerProductsTable");
+          if (products.length === 0) {
+            table.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--muted);">No has publicado productos aún. Usa el botón '+ Nuevo Producto'.</td></tr>`;
+          } else {
+            table.innerHTML = products.map(p => {
+              const isOut = p.stock <= 0;
+              const isLow = !isOut && p.stock <= (p.stock_minimo_alerta || 5);
+              const badge = isOut 
+                ? '<span class="badge badge-danger">Agotado</span>'
+                : isLow 
+                ? `<span class="badge badge-warning">Alerta: ${p.stock} unid.</span>`
+                : `<span class="badge badge-success">${p.stock} unid.</span>`;
+
+              return `
+                <tr>
+                  <td><code>${p.sku}</code></td>
+                  <td><strong>${p.nombre}</strong></td>
+                  <td>${API.formatCOP(p.precio)}</td>
+                  <td>${p.stock}</td>
+                  <td>${badge}</td>
+                  <td>
+                    <button class="btn btn-soft btn-stock-add" data-id="${p.id}" data-stock="${p.stock}" style="font-size:11px; padding:4px 8px;">
+                      + Reponer Stock
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join("");
+
+            document.querySelectorAll(".btn-stock-add").forEach(btn => {
+              btn.addEventListener("click", async () => {
+                const add = prompt("¿Cuántas unidades deseas agregar al stock existente?", "10");
+                const qty = parseInt(add);
+                if (qty > 0) {
+                  const newStock = parseInt(btn.dataset.stock) + qty;
+                  await API.supabaseUpdate("inv_productos", `?id=eq.${btn.dataset.id}`, { stock: newStock });
+                  UI.toast("Stock actualizado con éxito.", "success");
+                  loadSellerData();
+                }
+              });
+            });
+          }
+
+          // Consultar órdenes del vendedor
+          const ords = await API.supabaseTable("ord_pedidos", `?vendedor_id=eq.${user.id}&order=creado_en.desc`);
+          const orders = Array.isArray(ords) ? ords : [];
+          const pending = orders.filter(o => o.estado !== "ENTREGADA" && o.estado !== "CANCELADA").length;
+          document.querySelector("#kpiOrdersPending").textContent = pending;
+
+          const ordersTable = document.querySelector("#sellerOrdersTable");
+          if (orders.length === 0) {
+            ordersTable.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">No has recibido órdenes de compra aún.</td></tr>`;
+          } else {
+            ordersTable.innerHTML = orders.map(o => `
+              <tr>
+                <td><strong>${o.numero_orden}</strong></td>
+                <td style="font-size:12px;">${o.direccion_entrega}</td>
+                <td><strong>${API.formatCOP(o.total)}</strong></td>
+                <td><span class="badge badge-soft">${o.estado}</span></td>
+                <td>
+                  <div style="display:flex; gap:6px;">
+                    ${o.estado === 'CONFIRMADA' ? `
+                      <button class="btn btn-soft btn-action-state" data-id="${o.id}" data-next="EN_PREPARACION" style="font-size:11px; padding:4px 8px;">
+                        Marcar Preparado
+                      </button>
+                    ` : ''}
+                    ${o.estado === 'EN_PREPARACION' ? `
+                      <button class="btn btn-soft btn-action-state" data-id="${o.id}" data-next="ENVIADA" style="font-size:11px; padding:4px 8px;">
+                        🚚 Iniciar Reparto
+                      </button>
+                    ` : ''}
+                    ${o.estado === 'ENVIADA' ? `
+                      <button class="btn btn-primary btn-action-deliver" data-id="${o.id}" style="font-size:11px; padding:4px 8px;">
+                        ✔ Confirmar Entrega
+                      </button>
+                    ` : ''}
+                  </div>
+                </td>
+              </tr>
+            `).join("");
+
+            document.querySelectorAll(".btn-action-state").forEach(b => {
+              b.addEventListener("click", async () => {
+                await API.supabaseUpdate("ord_pedidos", `?id=eq.${b.dataset.id}`, { estado: b.dataset.next });
+                UI.toast(`Orden actualizada a ${b.dataset.next}`, "info");
+                loadSellerData();
+              });
+            });
+
+            document.querySelectorAll(".btn-action-deliver").forEach(b => {
+              b.addEventListener("click", async () => {
+                if (confirm("¿Confirmar entrega física con evidencia fotográfica y coordenadas de campus?")) {
+                  await API.supabaseUpdate("ord_pedidos", `?id=eq.${b.dataset.id}`, { estado: "ENTREGADA" });
+                  await API.supabaseUpdate("ent_seguimientos", `?pedido_id=eq.${b.dataset.id}`, { 
+                    estado_entrega: "ENTREGADO",
+                    fecha_entrega_real: new Date().toISOString()
+                  }).catch(() => {});
+                  UI.toast("¡Entrega registrada! Inicia periodo de retención Escrow de 72h o conformidad.", "success");
+                  loadSellerData();
+                }
+              });
+            });
+          }
+
+          // Consultar saldo Escrow y Disponible (Equipo 6)
+          const escrowRes = await API.supabaseTable("cont_escrow", `?vendedor_id=eq.${user.id}`);
+          const escrowList = Array.isArray(escrowRes) ? escrowRes : [];
+          const retenido = escrowList.filter(e => e.estado_escrow === "RETENIDO").reduce((sum, e) => sum + Number(e.monto_neto_vendedor), 0);
+          const liberado = escrowList.filter(e => e.estado_escrow === "LIBERADO").reduce((sum, e) => sum + Number(e.monto_neto_vendedor), 0);
+          document.querySelector("#kpiEscrow").textContent = API.formatCOP(retenido);
+          document.querySelector("#kpiBalance").textContent = API.formatCOP(liberado);
+
+        } catch (e) {
+          console.warn("Carga de datos del vendedor:", e.message);
+        }
+      }
+
+      // Modal Crear Producto
+      const productModal = document.querySelector("#productModal");
+      document.querySelector("#openNewProductModalBtn").addEventListener("click", async () => {
+        productModal.classList.add("active");
+        // Llenar categorías
+        const cats = await API.supabaseTable("inv_categorias", "?activo=eq.true").catch(() => []);
+        document.querySelector("#pCategoria").innerHTML = (cats || []).map(c => `<option value="${c.id}">${c.nombre}</option>`).join("");
+      });
+
+      document.querySelector("#closeProductModalBtn").addEventListener("click", () => {
+        productModal.classList.remove("active");
+      });
+
+      document.querySelector("#newProductForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const saveBtn = document.querySelector("#saveProductBtn");
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Guardando en Supabase...";
+
+        try {
+          await API.supabaseInsert("inv_productos", {
+            vendedor_id: user.id,
+            sku: document.querySelector("#pSku").value.trim(),
+            nombre: document.querySelector("#pNombre").value.trim(),
+            categoria_id: document.querySelector("#pCategoria").value || null,
+            precio: Number(document.querySelector("#pPrecio").value),
+            stock: parseInt(document.querySelector("#pStock").value),
+            imagen_url: document.querySelector("#pImagen").value.trim() || null,
+            descripcion: document.querySelector("#pDesc").value.trim()
+          });
+
+          UI.toast("¡Producto publicado exitosamente en el catálogo!", "success");
+          productModal.classList.remove("active");
+          document.querySelector("#newProductForm").reset();
+          loadSellerData();
+        } catch (err) {
+          UI.toast("Error al crear producto: " + err.message, "danger");
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Publicar en Catálogo";
+        }
+      });
+
+      await loadSellerData();
+    });
+  </script>
+</body>
+</html>
+

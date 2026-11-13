@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Inicio de Sesión</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="login">
+    <!-- Panel visual institucional USC -->
+    <section class="login-visual">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+        <button type="button" class="mobile-login-toggle" id="mobileLoginToggle">Iniciar sesión</button>
+      </div>
+
+      <div class="visual-copy">
+        <span class="eyebrow" style="color: #d5c5ff">Construcción de Software II</span>
+        <h1>Ecosistema Comercial Universitario</h1>
+        <p>Plataforma integral para compraventa, inventario, logística y conciliación financiera en la Universidad Santiago de Cali.</p>
+        
+        <div class="visual-stats">
+          <div><strong>7 Módulos</strong><span>Arquitectura distribuida</span></div>
+          <div><strong>100%</strong><span>Supabase PostgreSQL</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel de autenticación JWT -->
+    <section class="login-panel">
+      <form id="loginForm" class="login-box">
+        <div class="brand">
+          <span class="brand-mark brand-mark-slot"></span>
+          <span>Acceso al Sistema</span>
+        </div>
+        <h2>Bienvenido</h2>
+        <p class="muted">Ingresa con tus credenciales institucionales. El sistema identificará tu rol y te redirigirá a tu módulo correspondiente.</p>
+
+        <!-- Botones de credenciales de prueba oficiales -->
+        <label class="field" style="margin-bottom: 8px;">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand); font-weight: 800;">
+            Credenciales de Prueba Cátedra (Haz clic para autocompletar):
+          </span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+            <button type="button" class="btn btn-soft" style="font-size: 11.5px; padding: 6px 10px;" id="btnFillAdmin">
+              🛡 Admin (admin@usc.edu.co)
+            </button>
+            <button type="button" class="btn btn-soft" style="font-size: 11.5px; padding: 6px 10px;" id="btnFillVendedor">
+              🏪 Vendedor & Repartidor
+            </button>
+            <button type="button" class="btn btn-soft" style="font-size: 11.5px; padding: 6px 10px;" id="btnFillComprador">
+              🎓 Comprador Estudiante
+            </button>
+          </div>
+        </label>
+
+        <!-- Campos de credenciales -->
+        <label class="field">
+          Correo electrónico institucional
+          <input id="email" type="email" placeholder="usuario@usc.edu.co" required>
+        </label>
+
+        <label class="field">
+          Contraseña
+          <input id="password" type="password" placeholder="••••••••" required>
+        </label>
+
+        <button class="btn btn-primary login-submit" type="submit" id="submitBtn">
+          Ingresar al Marketplace
+        </button>
+
+        <div class="demo-note" id="loginStatus">
+          Autenticación mediante Supabase Auth JWT nativo. Las sesiones se protegen bajo tokens Bearer.
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    // Inicializar UI y logos
+    UI.initTheme();
+    document.querySelectorAll(".brand-mark-slot").forEach(slot => slot.innerHTML = UI.logoSvg);
+
+    // Toggle móvil
+    const mobileLoginToggle = document.querySelector("#mobileLoginToggle");
+    mobileLoginToggle?.addEventListener("click", () => {
+      document.querySelector(".login").classList.add("is-login-open");
+    });
+
+    // Autocompletado de prueba
+    const emailInput = document.querySelector("#email");
+    const passwordInput = document.querySelector("#password");
+
+    document.querySelector("#btnFillAdmin").addEventListener("click", () => {
+      emailInput.value = "admin@usc.edu.co";
+      passwordInput.value = "Admin123!";
+    });
+
+    document.querySelector("#btnFillVendedor").addEventListener("click", () => {
+      emailInput.value = "vendedor@usc.edu.co";
+      passwordInput.value = "Vendedor123!";
+    });
+
+    document.querySelector("#btnFillComprador").addEventListener("click", () => {
+      emailInput.value = "comprador@usc.edu.co";
+      passwordInput.value = "Comprador123!";
+    });
+
+    // Enviar Login
+    const loginForm = document.querySelector("#loginForm");
+    const submitBtn = document.querySelector("#submitBtn");
+    const loginStatus = document.querySelector("#loginStatus");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Verificando credenciales...";
+      loginStatus.textContent = "Autenticando contra Supabase...";
+
+      try {
+        const { user } = await Auth.login(email, password);
+        loginStatus.style.color = "var(--success)";
+        loginStatus.textContent = `¡Bienvenido, ${user.nombre}! Redirigiendo según tu rol (${user.rol})...`;
+        UI.toast(`Sesión iniciada como ${user.rol}`, "success");
+        
+        setTimeout(() => {
+          Auth.redirectByRole();
+        }, 800);
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Ingresar al Marketplace";
+        loginStatus.style.color = "var(--danger)";
+        loginStatus.textContent = `Error: ${err.message}`;
+        UI.toast(err.message, "danger");
+      }
+    });
+  </script>
+</body>
+</html>
+

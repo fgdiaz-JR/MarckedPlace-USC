@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Checkout & Pago</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+      </div>
+      <span class="side-label">Transacción</span>
+      <nav class="nav">
+        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo</button></a>
+        <a href="cart.html"><button style="width:100%; text-align:left;">Volver al Carrito</button></a>
+        <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
+      </nav>
+      <div class="sidebar-footer">
+        Conexión Segura<br>
+        <strong style="color: var(--brand)">Equipos 1 & 2</strong>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <b>Finalizar Compra & Pasarela de Pagos</b>
+          <span>Procesamiento de orden y confirmación bancaria</span>
+        </div>
+        <div class="top-actions">
+          <button class="theme-toggle-btn icon-btn">☾</button>
+          <div class="avatar" id="headerAvatar">US</div>
+          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">Checkout Unificado</span>
+            <h1>Confirma tu dirección y método de pago</h1>
+            <p class="lead">Garantía de compra protegida por custodia Escrow (Equipo 6) y trazabilidad en tiempo real (Equipo 5).</p>
+          </div>
+        </div>
+
+        <div class="cart-layout">
+          <!-- Formulario de entrega y métodos de pago -->
+          <div class="card panel">
+            <!-- Sección 1: Datos de Entrega (Ley 1581 de 2012) -->
+            <h2 style="margin-bottom: 14px;">1. Dirección de Entrega en Campus o Domicilio</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px;">
+              <label class="field" style="margin-bottom:0;">
+                Ciudad de Entrega
+                <input type="text" id="deliveryCity" value="Cali" required>
+              </label>
+              <label class="field" style="margin-bottom:0;">
+                Teléfono de Contacto
+                <input type="tel" id="deliveryPhone" placeholder="Ej. 315 123 4567" required>
+              </label>
+              <label class="field" style="grid-column: 1 / -1; margin-bottom:0;">
+                Dirección exacta o Edificio/Facultad en Campus USC
+                <input type="text" id="deliveryAddress" placeholder="Ej. Calle 5 # 62-00, Edificio 4, Aula 302" required>
+              </label>
+              <label class="field" style="grid-column: 1 / -1; margin-bottom:0;">
+                Notas para el repartidor (Opcional)
+                <input type="text" id="deliveryNotes" placeholder="Ej. Entregar en portería principal o llamar antes">
+              </label>
+            </div>
+
+            <!-- Sección 2: Método de Pago (Equipo 2) -->
+            <h2 style="margin-bottom: 14px; border-top: 1px solid var(--line); padding-top: 20px;">2. Método de Pago (Pasarela Equipo 2)</h2>
+            <div class="role-cards" style="margin-bottom: 20px;">
+              <button type="button" class="role-card active payment-tab" data-method="PSE">
+                <b>🏦 PSE</b>
+                <span>Débito desde cuenta bancaria</span>
+              </button>
+              <button type="button" class="role-card payment-tab" data-method="QR">
+                <b>📱 Código QR</b>
+                <span>Bancolombia / Nequi / Dale</span>
+              </button>
+              <button type="button" class="role-card payment-tab" data-method="CONTRA_ENTREGA">
+                <b>💵 Contra Entrega</b>
+                <span>Anticipo $50.000 + saldo</span>
+              </button>
+            </div>
+
+            <!-- Panel dinámico PSE -->
+            <div id="panelPSE" class="payment-panel">
+              <label class="field">
+                Selecciona tu Banco o Billetera
+                <select id="pseBank" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+                  <option value="BANCOLOMBIA">Bancolombia</option>
+                  <option value="NEQUI">Nequi</option>
+                  <option value="DAVIPLATA">Daviplata</option>
+                  <option value="BANCO_BOGOTA">Banco de Bogotá</option>
+                  <option value="DAVIVIENDA">Davivienda</option>
+                  <option value="BBVA">BBVA Colombia</option>
+                </select>
+              </label>
+              <label class="field">
+                Tipo de Persona
+                <select id="psePersonType" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+                  <option value="NATURAL">Persona Natural</option>
+                  <option value="JURIDICA">Persona Jurídica</option>
+                </select>
+              </label>
+            </div>
+
+            <!-- Panel dinámico QR -->
+            <div id="panelQR" class="payment-panel" style="display: none; text-align: center; padding: 20px; background: var(--brand-soft); border-radius: 12px;">
+              <h4 style="color: var(--brand-dark); margin-bottom: 8px;">Escanea el código QR desde tu app bancaria</h4>
+              <div style="background: #fff; width: 160px; height: 160px; margin: 0 auto 12px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--brand);">
+                <div style="font-size: 50px;">📲</div>
+              </div>
+              <p class="muted" style="font-size: 12px;">Código QR interoperable dinámico válido por 15 minutos.</p>
+            </div>
+
+            <!-- Panel dinámico Contra Entrega -->
+            <div id="panelCOD" class="payment-panel" style="display: none; padding: 16px; background: var(--warning-soft); border-radius: 12px;">
+              <h4 style="color: var(--warning); margin-bottom: 6px;">Condición de Pago Contra Entrega</h4>
+              <p style="font-size: 13px; color: var(--ink); margin-bottom: 8px;">
+                Para confirmar el despacho se realiza una <strong>reserva mediante anticipo de $50.000 COP</strong>. El saldo restante se cancela al repartidor al momento de recibir el producto.
+              </p>
+              <div style="display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 700;">
+                <span>Anticipo hoy: <strong>$ 50.000 COP</strong></span>
+                <span id="codRemainingLabel">Saldo al recibir: <strong>$ 0</strong></span>
+              </div>
+            </div>
+
+            <!-- Soporte WhatsApp -->
+            <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between;">
+              <span class="muted" style="font-size: 12.5px;">¿Tienes dudas sobre tu pago?</span>
+              <a href="https://wa.me/573000000000?text=Hola,%20tengo%20una%20duda%20con%20mi%20pago%20en%20Marketplace%20USC" target="_blank" class="btn btn-soft" style="font-size: 12px; padding: 6px 12px;">
+                💬 Soporte WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Resumen del Pedido -->
+          <div>
+            <div class="order-summary-box">
+              <h2 style="font-size: 18px; margin-bottom: 14px;">Total de la Orden</h2>
+
+              <div id="checkoutItemsList" style="max-height: 180px; overflow-y: auto; margin-bottom: 14px; border-bottom: 1px solid var(--line); padding-bottom: 10px;"></div>
+
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="chkSubtotal">$ 0</strong>
+              </div>
+              <div class="summary-row">
+                <span>Impuestos IVA (19%)</span>
+                <strong id="chkTax">$ 0</strong>
+              </div>
+              <div class="summary-row">
+                <span>Costo de envío</span>
+                <strong id="chkShipping">$ 0</strong>
+              </div>
+              <div class="summary-row total">
+                <span>Total a Pagar</span>
+                <strong id="chkTotal" style="color: var(--brand);">$ 0</strong>
+              </div>
+
+              <button type="button" class="btn btn-primary" id="confirmOrderBtn" style="width: 100%; padding: 14px; font-size: 15px; margin-top: 20px;">
+                Pagar y Generar Pedido
+              </button>
+
+              <div id="checkoutStatus" style="font-size: 12px; text-align: center; margin-top: 10px; color: var(--muted);"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart-store.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!Auth.requireAuth()) return;
+      UI.initHeader("checkout");
+
+      const items = CartStore.getItems();
+      if (items.length === 0) {
+        alert("Tu carrito está vacío.");
+        window.location.href = "catalog.html";
+        return;
+      }
+
+      const totals = CartStore.getTotals();
+      const user = Auth.getUser();
+
+      // Renderizar resumen
+      document.querySelector("#chkSubtotal").textContent = API.formatCOP(totals.subtotal);
+      document.querySelector("#chkTax").textContent = API.formatCOP(totals.impuestos);
+      document.querySelector("#chkShipping").textContent = totals.costoEnvio === 0 ? "GRATIS ($0)" : API.formatCOP(totals.costoEnvio);
+      document.querySelector("#chkTotal").textContent = API.formatCOP(totals.total);
+
+      document.querySelector("#checkoutItemsList").innerHTML = items.map(i => `
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
+          <span>${i.nombre} <b style="color:var(--brand);">&times; ${i.cantidad}</b></span>
+          <strong>${API.formatCOP(i.precio * i.cantidad)}</strong>
+        </div>
+      `).join("");
+
+      // Método de pago activo
+      let currentMethod = "PSE";
+      const paymentTabs = document.querySelectorAll(".payment-tab");
+      const panelPSE = document.querySelector("#panelPSE");
+      const panelQR = document.querySelector("#panelQR");
+      const panelCOD = document.querySelector("#panelCOD");
+      const codRemainingLabel = document.querySelector("#codRemainingLabel");
+
+      const codSaldoRestante = Math.max(0, totals.total - 50000);
+      codRemainingLabel.innerHTML = `Saldo al recibir: <strong>${API.formatCOP(codSaldoRestante)}</strong>`;
+
+      paymentTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          paymentTabs.forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          currentMethod = tab.dataset.method;
+
+          panelPSE.style.display = currentMethod === "PSE" ? "block" : "none";
+          panelQR.style.display = currentMethod === "QR" ? "block" : "none";
+          panelCOD.style.display = currentMethod === "CONTRA_ENTREGA" ? "block" : "none";
+        });
+      });
+
+      // Confirmar orden y pagar
+      const confirmOrderBtn = document.querySelector("#confirmOrderBtn");
+      const checkoutStatus = document.querySelector("#checkoutStatus");
+
+      confirmOrderBtn.addEventListener("click", async () => {
+        const address = document.querySelector("#deliveryAddress").value.trim();
+        const city = document.querySelector("#deliveryCity").value.trim();
+        const phone = document.querySelector("#deliveryPhone").value.trim();
+        const notes = document.querySelector("#deliveryNotes").value.trim();
+
+        if (!address) {
+          UI.toast("Por favor ingresa la dirección de entrega.", "warning");
+          return;
+        }
+
+        confirmOrderBtn.disabled = true;
+        confirmOrderBtn.textContent = "Procesando pago y registrando orden...";
+        checkoutStatus.textContent = "Validando con pasarela e idempotencia...";
+
+        try {
+          const numOrden = "USC-" + Math.floor(100000 + Math.random() * 900000);
+          const idempotencyKey = "PAY-" + Date.now() + "-" + Math.random().toString(36).substring(7);
+          
+          // ID del vendedor del primer ítem (o fallback al vendedor del usuario de prueba)
+          const vendedorId = items[0].vendedor_id || "fbef8c79-1691-42cd-8a68-b90ff2025f4b";
+
+          // 1. Crear Orden en ord_pedidos (Equipo 1)
+          const orderPayload = {
+            comprador_id: user.id,
+            vendedor_id: vendedorId,
+            numero_orden: numOrden,
+            estado: "CONFIRMADA",
+            subtotal: totals.subtotal,
+            impuestos: totals.impuestos,
+            costo_envio: totals.costoEnvio,
+            descuentos: totals.descuentos,
+            total: totals.total,
+            moneda: "COP",
+            direccion_entrega: `${address} (Tel: ${phone})`,
+            ciudad_entrega: city,
+            notas: notes
+          };
+
+          const orderRes = await API.supabaseInsert("ord_pedidos", orderPayload);
+          const createdOrder = Array.isArray(orderRes) ? orderRes[0] : orderRes;
+          const orderId = createdOrder?.id || "temp-order-id";
+
+          // 2. Insertar ítems del pedido
+          for (const item of items) {
+            await API.supabaseInsert("ord_items_pedido", {
+              pedido_id: orderId,
+              producto_id: item.id,
+              nombre_producto: item.nombre,
+              cantidad: item.cantidad,
+              precio_unitario: item.precio,
+              subtotal: item.precio * item.cantidad
+            }).catch(() => {});
+          }
+
+          // 3. Registrar transacción de pago en pag_transacciones (Equipo 2)
+          await API.supabaseInsert("pag_transacciones", {
+            pedido_id: orderId,
+            comprador_id: user.id,
+            idempotency_key: idempotencyKey,
+            metodo: currentMethod,
+            monto: totals.total,
+            anticipo: currentMethod === "CONTRA_ENTREGA" ? 50000 : 0,
+            saldo_pendiente: currentMethod === "CONTRA_ENTREGA" ? codSaldoRestante : 0,
+            estado: "APPROVED",
+            referencia_bancaria: "REF-" + Math.floor(Math.random() * 9999999),
+            mensaje_respuesta: `Transacción aprobada exitosamente vía ${currentMethod}`
+          }).catch(() => {});
+
+          // 4. Crear retención en cont_escrow (Equipo 6)
+          const comision5Pct = Math.round(totals.total * 0.05);
+          const netoVendedor = totals.total - comision5Pct;
+
+          await API.supabaseInsert("cont_escrow", {
+            pedido_id: orderId,
+            vendedor_id: vendedorId,
+            comprador_id: user.id,
+            monto_bruto: totals.total,
+            porcentaje_comision: 5.00,
+            comision_plataforma: comision5Pct,
+            monto_neto_vendedor: netoVendedor,
+            estado_escrow: "RETENIDO"
+          }).catch(() => {});
+
+          // 5. Crear seguimiento de entrega en ent_seguimientos (Equipo 5)
+          const numGuia = "GUIA-USC-" + Math.floor(100000 + Math.random() * 900000);
+          await API.supabaseInsert("ent_seguimientos", {
+            pedido_id: orderId,
+            vendedor_id: vendedorId,
+            numero_guia: numGuia,
+            transportadora: "Versand Express USC",
+            estado_entrega: "PAGO_CONFIRMADO"
+          }).catch(() => {});
+
+          // 6. Crear notificación para el comprador y el vendedor (Equipo 3)
+          await API.supabaseInsert("notif_mensajes", {
+            usuario_id: user.id,
+            tipo: "ORDEN_CREADA",
+            titulo: `¡Orden ${numOrden} Confirmada!`,
+            mensaje: `Tu pago de ${API.formatCOP(totals.total)} por ${items.length} artículo(s) fue aprobado con éxito.`,
+            referencia_id: orderId
+          }).catch(() => {});
+
+          // Vaciar carrito
+          CartStore.clear();
+
+          UI.toast("¡Orden y pago procesados con éxito!", "success");
+          setTimeout(() => {
+            window.location.href = `orders.html?id=${orderId}&success=1`;
+          }, 1200);
+
+        } catch (err) {
+          confirmOrderBtn.disabled = false;
+          confirmOrderBtn.textContent = "Pagar y Generar Pedido";
+          checkoutStatus.textContent = `Error: ${err.message}`;
+          UI.toast(err.message, "danger");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

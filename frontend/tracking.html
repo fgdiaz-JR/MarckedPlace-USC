@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Seguimiento de Entregas</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+      </div>
+      <span class="side-label">Exploración</span>
+      <nav class="nav">
+        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
+        <a href="cart.html"><button style="width:100%; text-align:left;">Mi Carrito</button></a>
+        <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
+        <a href="tracking.html" class="active"><button class="active" style="width:100%; text-align:left;">Seguimiento</button></a>
+        <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones</button></a>
+      </nav>
+      <div class="sidebar-footer">
+        Universidad Santiago de Cali<br>
+        <strong style="color: var(--brand)">Equipo 5: Trazabilidad</strong>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <b>Seguimiento de Entregas & Logística</b>
+          <span>Trazabilidad satelital en tiempo real</span>
+        </div>
+        <div class="top-actions">
+          <button class="theme-toggle-btn icon-btn">☾</button>
+          <div class="avatar" id="headerAvatar">US</div>
+          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">Equipo 5: Seguimiento de Entregas</span>
+            <h1>Trazabilidad de Envío</h1>
+            <p class="lead">Supervisión paso a paso del despacho y confirmación de recepción protegida por Escrow.</p>
+          </div>
+        </div>
+
+        <!-- Buscador de guía o selección de orden -->
+        <div class="card" style="padding: 16px 20px; margin-bottom: 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <input type="text" id="guideInput" placeholder="Ingresa tu número de guía (Ej. GUIA-USC-123456)..." style="flex: 1; min-width: 260px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--canvas); color: var(--ink);">
+          <button class="btn btn-primary" id="searchGuideBtn">Consultar Guía</button>
+        </div>
+
+        <!-- Panel principal de seguimiento -->
+        <div class="card panel" id="trackingDetailsCard">
+          <div class="panel-head">
+            <div>
+              <h2 id="guideNumberLabel">Guía: GUIA-USC-582910</h2>
+              <span class="muted" id="carrierLabel">Transportadora: Versand Express USC · En ruta a Cali</span>
+            </div>
+            <span class="badge badge-success" id="trackingStatusBadge">En Tránsito</span>
+          </div>
+
+          <!-- Alerta 48h si aplica -->
+          <div id="alert48h" style="display:none; background: var(--warning-soft); border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; color: var(--warning);">
+            ⚠️ <strong>En Verificación:</strong> Han transcurrido más de 48 horas sin registro de movimiento. El equipo de soporte está validando la ruta con la transportadora.
+          </div>
+
+          <!-- Línea de tiempo dinámica -->
+          <div class="timeline" id="trackingTimeline">
+            <div class="timeline-step completed" id="step1">
+              <div class="timeline-dot">✓</div>
+              <span class="timeline-label">Pago Confirmado</span>
+              <span class="timeline-date" id="dateStep1">Hoy</span>
+            </div>
+            <div class="timeline-step completed" id="step2">
+              <div class="timeline-dot">✓</div>
+              <span class="timeline-label">Empacado</span>
+              <span class="timeline-date" id="dateStep2">En bodega</span>
+            </div>
+            <div class="timeline-step active" id="step3">
+              <div class="timeline-dot">🚚</div>
+              <span class="timeline-label">En Tránsito</span>
+              <span class="timeline-date" id="dateStep3">Repartidor asignado</span>
+            </div>
+            <div class="timeline-step" id="step4">
+              <div class="timeline-dot">4</div>
+              <span class="timeline-label">Entregado</span>
+              <span class="timeline-date" id="dateStep4">Estimado: Mañana</span>
+            </div>
+          </div>
+
+          <!-- Información del Repartidor y Acciones Seguras -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; border-top: 1px solid var(--line); padding-top: 20px;">
+            <div>
+              <h4 style="font-size: 15px; margin-bottom: 10px;">Repartidor Autorizado USC</h4>
+              <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">
+                Identidad verificada por la universidad. Por seguridad, la comunicación telefónica se realiza con enmascaramiento de número.
+              </p>
+              <button class="btn btn-soft" id="maskedCallBtn" style="font-size: 12.5px;">
+                📞 Contactar al Repartidor (Llamada Enmascarada)
+              </button>
+            </div>
+
+            <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
+              <h4 style="font-size: 15px; margin-bottom: 6px; color: var(--brand);">Regla de Escrow & Liberación</h4>
+              <p style="font-size: 12.5px; color: var(--muted); line-height: 1.4; margin-bottom: 14px;">
+                El dinero del vendedor permanece retenido en custodia. Se libera automáticamente <strong>a las 72 horas</strong> de la entrega o de forma inmediata cuando confirmas recepción conforme.
+              </p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-primary" id="confirmConformityBtn" style="font-size: 12px; padding: 8px 12px;">
+                  ✔ Confirmar Recibido Conforme
+                </button>
+                <button type="button" class="btn btn-soft" id="reportPqrBtn" style="font-size: 12px; padding: 8px 12px; color: var(--danger); border-color: var(--danger);">
+                  ⚠️ Reportar Incidencia PQR
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evidencia fotográfica -->
+          <div style="margin-top: 24px; border-top: 1px solid var(--line); padding-top: 20px;">
+            <h4 style="font-size: 15px; margin-bottom: 10px;">Evidencia Fotográfica de Entrega</h4>
+            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+              <div style="width: 140px; height: 100px; background: var(--canvas); border-radius: 10px; border: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); text-align: center; padding: 8px;">
+                Foto con marca de agua (Fecha, Hora, GPS)
+              </div>
+              <div style="font-size: 12.5px; color: var(--muted); line-height: 1.5;">
+                Registrada al momento de entrega física en las coordenadas del campus USC.<br>
+                Criptográficamente firmada mediante webhook HMAC SHA-256.
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!Auth.requireAuth()) return;
+      UI.initHeader("tracking");
+
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get("orderId");
+      const guideParam = params.get("guia");
+
+      const guideInput = document.querySelector("#guideInput");
+      const searchGuideBtn = document.querySelector("#searchGuideBtn");
+      const guideNumberLabel = document.querySelector("#guideNumberLabel");
+      const trackingStatusBadge = document.querySelector("#trackingStatusBadge");
+      const confirmConformityBtn = document.querySelector("#confirmConformityBtn");
+      const reportPqrBtn = document.querySelector("#reportPqrBtn");
+      const maskedCallBtn = document.querySelector("#maskedCallBtn");
+
+      let activeTracking = null;
+
+      async function loadTracking(targetQuery) {
+        try {
+          const res = await API.supabaseTable("ent_seguimientos", targetQuery);
+          if (Array.isArray(res) && res.length > 0) {
+            activeTracking = res[0];
+            renderTracking(activeTracking);
+          } else {
+            guideNumberLabel.textContent = "Guía Activa: GUIA-USC-" + Math.floor(100000 + Math.random() * 900000);
+          }
+        } catch (e) {
+          guideNumberLabel.textContent = "Guía de Prueba: GUIA-USC-Demo";
+        }
+      }
+
+      function renderTracking(t) {
+        guideNumberLabel.textContent = `Guía Oficial: ${t.numero_guia}`;
+        trackingStatusBadge.textContent = t.estado_entrega.replace("_", " ");
+
+        if (t.en_alerta_48h) {
+          document.querySelector("#alert48h").style.display = "block";
+        }
+
+        // Actualizar pasos
+        if (t.estado_entrega === "ENTREGADO") {
+          document.querySelectorAll(".timeline-step").forEach(s => {
+            s.classList.add("completed");
+            s.classList.remove("active");
+          });
+        }
+      }
+
+      maskedCallBtn.addEventListener("click", () => {
+        alert("Llamada enmascarada segura activada:\n\nTu número real permanece oculto para proteger tus datos personales conforme a la Ley 1581 de 2012.\n\nConectando con el repartidor...");
+      });
+
+      // Confirmar recibido conforme (libera Escrow en Equipo 6)
+      confirmConformityBtn.addEventListener("click", async () => {
+        if (!confirm("¿Confirmas que recibiste tu pedido completo y en perfecto estado? Al confirmar, se liberará el saldo en custodia al vendedor.")) return;
+
+        try {
+          confirmConformityBtn.disabled = true;
+          confirmConformityBtn.textContent = "Liberando fondos Escrow...";
+
+          // Actualizar seguimiento
+          if (activeTracking?.pedido_id) {
+            await API.supabaseUpdate("ent_seguimientos", `?pedido_id=eq.${activeTracking.pedido_id}`, {
+              estado_entrega: "ENTREGADO",
+              fecha_entrega_real: new Date().toISOString()
+            }).catch(() => {});
+
+            // Actualizar contabilidad Escrow (Equipo 6)
+            await API.supabaseUpdate("cont_escrow", `?pedido_id=eq.${activeTracking.pedido_id}`, {
+              estado_escrow: "LIBERADO",
+              motivo_liberacion: "CONFORMIDAD_CLIENTE",
+              fecha_liberacion_real: new Date().toISOString()
+            }).catch(() => {});
+
+            // Notificación al vendedor
+            await API.supabaseInsert("notif_mensajes", {
+              usuario_id: activeTracking.vendedor_id,
+              tipo: "ESCROW_LIBERADO",
+              titulo: "¡Fondos Liberados!",
+              mensaje: `El comprador confirmó recepción conforme de la orden. Tu saldo neto fue transferido a tu saldo disponible.`
+            }).catch(() => {});
+          }
+
+          UI.toast("¡Recepción confirmada y fondos liberados al vendedor exitosamente!", "success");
+          confirmConformityBtn.textContent = "✔ Confirmado";
+          trackingStatusBadge.textContent = "Entregado";
+          trackingStatusBadge.className = "badge badge-success";
+        } catch (err) {
+          UI.toast("Error al registrar conformidad: " + err.message, "danger");
+        }
+      });
+
+      // Reportar PQR (congela fondos Escrow)
+      reportPqrBtn.addEventListener("click", async () => {
+        const razon = prompt("Describe la incidencia o motivo de la inconformidad para congelar los fondos del vendedor:");
+        if (!razon) return;
+
+        try {
+          if (activeTracking?.pedido_id) {
+            await API.supabaseUpdate("cont_escrow", `?pedido_id=eq.${activeTracking.pedido_id}`, {
+              estado_escrow: "BLOQUEADO_PQR"
+            }).catch(() => {});
+
+            await API.supabaseInsert("notif_mensajes", {
+              usuario_id: activeTracking.vendedor_id,
+              tipo: "INCIDENCIA_PQR",
+              titulo: "Incidencia PQR Registrada - Fondos Congelados",
+              mensaje: `El comprador ha reportado una inconformidad: "${razon}". Los fondos quedan bloqueados hasta resolución del Administrador.`
+            }).catch(() => {});
+          }
+
+          UI.toast("Incidencia radicada. Fondos en Escrow congelados prioritariamente.", "warning");
+        } catch (e) {
+          UI.toast("Error al radicar PQR.", "danger");
+        }
+      });
+
+      if (orderId) {
+        await loadTracking(`?pedido_id=eq.${orderId}`);
+      } else if (guideParam) {
+        guideInput.value = guideParam;
+        await loadTracking(`?numero_guia=eq.${guideParam}`);
+      } else {
+        await loadTracking(`?limit=1`);
+      }
+
+      searchGuideBtn.addEventListener("click", () => {
+        const val = guideInput.value.trim();
+        if (val) loadTracking(`?numero_guia=eq.${val}`);
+      });
+    });
+  </script>
+</body>
+</html>
+

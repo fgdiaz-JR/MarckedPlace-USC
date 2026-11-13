@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketplace USC | Historial de Pedidos</title>
+  <link rel="stylesheet" href="styles/versand.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark brand-mark-slot"></span>
+        <span>Marketplace USC</span>
+      </div>
+      <span class="side-label">Exploración</span>
+      <nav class="nav">
+        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
+        <a href="cart.html"><button style="width:100%; text-align:left;">Mi Carrito</button></a>
+        <a href="orders.html" class="active"><button class="active" style="width:100%; text-align:left;">Mis Pedidos</button></a>
+        <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
+        <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones</button></a>
+      </nav>
+      <div class="sidebar-footer">
+        Universidad Santiago de Cali<br>
+        <strong style="color: var(--brand)">Equipo 1: Órdenes</strong>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <b>Gestión de Pedidos</b>
+          <span>Historial de compras y trazabilidad de estados</span>
+        </div>
+        <div class="top-actions">
+          <button class="theme-toggle-btn icon-btn">☾</button>
+          <a href="notifications.html" class="icon-btn" style="position:relative; text-decoration:none;">
+            🔔
+            <span class="badge-count" id="notifBadge" style="position:absolute; top:-4px; right:-4px; display:none;">0</span>
+          </a>
+          <div class="avatar" id="headerAvatar">US</div>
+          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">Equipo 1: Órdenes & Envíos</span>
+            <h1>Mis Pedidos y Comprobantes</h1>
+            <p class="lead">Revisa el estado de tus compras, descarga comprobantes y gestiona devoluciones o reintentos.</p>
+          </div>
+        </div>
+
+        <!-- Filtros de estado -->
+        <div class="card" style="padding: 12px 18px; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-soft active order-filter" data-status="">Todos</button>
+          <button class="btn btn-soft order-filter" data-status="CONFIRMADA">Confirmadas</button>
+          <button class="btn btn-soft order-filter" data-status="EN_PREPARACION">En Preparación</button>
+          <button class="btn btn-soft order-filter" data-status="ENVIADA">Enviadas</button>
+          <button class="btn btn-soft order-filter" data-status="ENTREGADA">Entregadas</button>
+          <button class="btn btn-soft order-filter" data-status="CANCELADA">Canceladas</button>
+        </div>
+
+        <!-- Tabla de pedidos -->
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Listado de Pedidos</h2>
+            <span class="muted" id="ordersCount">Cargando pedidos...</span>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="table" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>N° de Orden</th>
+                  <th>Fecha</th>
+                  <th>Destino</th>
+                  <th>Total COP</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center; padding:30px; color:var(--muted);">
+                    Cargando pedidos desde Supabase...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart-store.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!Auth.requireAuth()) return;
+      UI.initHeader("orders");
+
+      const user = Auth.getUser();
+      const role = Auth.getRole();
+      const ordersTableBody = document.querySelector("#ordersTableBody");
+      const ordersCount = document.querySelector("#ordersCount");
+      let allOrders = [];
+
+      async function loadOrders() {
+        try {
+          let filter = "";
+          if (role === "COMPRADOR") {
+            filter = `?comprador_id=eq.${user.id}&order=creado_en.desc`;
+          } else if (role === "VENDEDOR") {
+            filter = `?vendedor_id=eq.${user.id}&order=creado_en.desc`;
+          } else {
+            filter = `?order=creado_en.desc&limit=50`;
+          }
+
+          const res = await API.supabaseTable("ord_pedidos", filter);
+          allOrders = Array.isArray(res) ? res : [];
+          renderOrders("");
+        } catch (err) {
+          ordersTableBody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align:center; padding:30px; color:var(--muted);">
+                Aún no hay pedidos registrados o la tabla 'ord_pedidos' está en creación en Supabase.
+              </td>
+            </tr>
+          `;
+          ordersCount.textContent = "0 pedidos";
+        }
+      }
+
+      function getBadge(status) {
+        const badges = {
+          "PENDIENTE_PAGO": '<span class="badge badge-warning">Pendiente Pago</span>',
+          "CONFIRMADA": '<span class="badge badge-soft">Confirmada</span>',
+          "EN_PREPARACION": '<span class="badge badge-soft">En Preparación</span>',
+          "LISTA_DESPACHO": '<span class="badge badge-soft">Lista Despacho</span>',
+          "ENVIADA": '<span class="badge badge-warning">Enviada 🚚</span>',
+          "ENTREGADA": '<span class="badge badge-success">Entregada ✔</span>',
+          "CANCELADA": '<span class="badge badge-danger">Cancelada</span>',
+          "DEVOLUCION_SOLICITADA": '<span class="badge badge-danger">Devolución</span>'
+        };
+        return badges[status] || `<span class="badge">${status}</span>`;
+      }
+
+      function renderOrders(statusFilter) {
+        let filtered = allOrders;
+        if (statusFilter) {
+          filtered = filtered.filter(o => o.estado === statusFilter);
+        }
+
+        ordersCount.textContent = `${filtered.length} órdenes encontradas`;
+
+        if (filtered.length === 0) {
+          ordersTableBody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align:center; padding:40px; color:var(--muted);">
+                No se encontraron pedidos con este filtro.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        ordersTableBody.innerHTML = filtered.map(order => `
+          <tr>
+            <td>
+              <strong>${order.numero_orden}</strong>
+            </td>
+            <td style="font-size:12.5px; color:var(--muted);">${API.formatDate(order.creado_en)}</td>
+            <td style="font-size:12.5px;">${order.ciudad_entrega || 'Cali'}</td>
+            <td><strong>${API.formatCOP(order.total)}</strong></td>
+            <td>${getBadge(order.estado)}</td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <a href="tracking.html?orderId=${order.id}" class="btn btn-soft" style="font-size:11px; padding:4px 8px;">
+                  Trazabilidad
+                </a>
+                <button type="button" class="btn btn-soft btn-download-receipt" data-id="${order.id}" style="font-size:11px; padding:4px 8px;">
+                  Comprobante
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+
+        document.querySelectorAll(".btn-download-receipt").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.id;
+            const o = allOrders.find(ord => ord.id === id);
+            alert(`Comprobante Oficial Marketplace USC\n\nOrden: ${o.numero_orden}\nFecha: ${API.formatDate(o.creado_en)}\nTotal: ${API.formatCOP(o.total)}\nMoneda: COP\nEstado: ${o.estado}\n\nConforme a la Ley 1581 de 2012 de Colombia.`);
+          });
+        });
+      }
+
+      // Filtros
+      document.querySelectorAll(".order-filter").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".order-filter").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderOrders(btn.dataset.status);
+        });
+      });
+
+      await loadOrders();
+    });
+  </script>
+</body>
+</html>
+

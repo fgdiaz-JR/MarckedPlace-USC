@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: marketplace-usc-contabilidad
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SUPABASE_URL
+        value: https://xmrlazemifmepyahqsrz.supabase.co
+      - key: SUPABASE_KEY
+        sync: false
+      - key: PLATFORM_COMMISSION_PERCENT
+        value: "5.0"
+      - key: ESCROW_EXPIRATION_HOURS
+        value: "72"
+
