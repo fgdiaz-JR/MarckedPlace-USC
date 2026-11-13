@@ -21,8 +21,8 @@ const CONFIG = {
     // Equipo 2: Pasarela de Pago (PSE, QR, COD)
     payments: localStorage.getItem("USC_API_PAYMENTS") || "http://localhost:8002/api",
     
-    // Equipo 3: Notificaciones (Desarrollado por nosotros en FastAPI)
-    notifications: localStorage.getItem("USC_API_NOTIFICATIONS") || "http://localhost:8003/api",
+    // Equipo 3: Notificaciones (Desarrollado por nosotros en FastAPI - Desplegado en Render)
+    notifications: localStorage.getItem("USC_API_NOTIFICATIONS") || "https://marketplace-usc-notificaciones.onrender.com/api",
     
     // Equipo 4: Productos, Inventario y Carrito
     inventory: localStorage.getItem("USC_API_INVENTORY") || "http://localhost:8004/api",
@@ -30,8 +30,8 @@ const CONFIG = {
     // Equipo 5: Seguimiento de Entregas y Transportadoras
     tracking: localStorage.getItem("USC_API_TRACKING") || "http://localhost:8005/api",
     
-    // Equipo 6: Contabilidad, Conciliación y Escrow (Desarrollado por nosotros en FastAPI)
-    accounting: localStorage.getItem("USC_API_ACCOUNTING") || "http://localhost:8006/api",
+    // Equipo 6: Contabilidad, Conciliación y Escrow (Desarrollado por nosotros en FastAPI - Desplegado en Render)
+    accounting: localStorage.getItem("USC_API_ACCOUNTING") || "https://marketplace-usc-contabilidad.onrender.com/api",
     
     // Equipo 7: Catálogo
     catalog: localStorage.getItem("USC_API_CATALOG") || "http://localhost:8007/api"
