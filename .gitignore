@@ -26,3 +26,5 @@ temp_styles/
 Thumbs.db
 *.log
 
+
+.vercel
