@@ -27,8 +27,8 @@ const CONFIG = {
     // Equipo 4: Productos, Inventario y Carrito
     inventory: localStorage.getItem("USC_API_INVENTORY") || "http://localhost:8004/api",
     
-    // Equipo 5: Seguimiento de Entregas y Transportadoras
-    tracking: localStorage.getItem("USC_API_TRACKING") || "http://localhost:8005/api",
+    // Equipo 5: Seguimiento de Entregas y Transportadoras (Desplegado en Render)
+    tracking: localStorage.getItem("USC_API_TRACKING") || "https://marketplace-usc-seguimiento.onrender.com/api",
     
     // Equipo 6: Contabilidad, Conciliación y Escrow (Desarrollado por nosotros en FastAPI - Desplegado en Render)
     accounting: localStorage.getItem("USC_API_ACCOUNTING") || "https://marketplace-usc-contabilidad.onrender.com/api",
