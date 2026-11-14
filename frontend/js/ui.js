@@ -4,132 +4,172 @@
  */
 
 const UI = {
- logoSvg: `<svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 7.5 12 11l8-3.5M12 11v9M8 5.75v8.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16.5 5.8c2.1 0 3.5 1.4 3.5 3.2 0 2.7-3.5 5.2-3.5 5.2S13 11.7 13 9c0-1.8 1.4-3.2 3.5-3.2Z" fill="currentColor" stroke="var(--surface)" stroke-width=".8"/><circle cx="16.5" cy="9" r="1" fill="var(--surface)"/></svg>`,
+  logoSvg: `<svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 7.5 12 11l8-3.5M12 11v9M8 5.75v8.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16.5 5.8c2.1 0 3.5 1.4 3.5 3.2 0 2.7-3.5 5.2-3.5 5.2S13 11.7 13 9c0-1.8 1.4-3.2 3.5-3.2Z" fill="currentColor" stroke="var(--surface)" stroke-width=".8"/><circle cx="16.5" cy="9" r="1" fill="var(--surface)"/></svg>`,
 
- /**
- * Configura el tema claro / oscuro con persistencia
- */
- initTheme() {
- const savedTheme = localStorage.getItem("usc_theme") || "light";
- document.body.dataset.theme = savedTheme;
- this.updateThemeButton();
+  // Icono: sol (modo claro)
+  iconSun: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`,
 
- document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
- btn.addEventListener("click", () => {
- const isDark = document.body.dataset.theme === "dark";
- const newTheme = isDark ? "light" : "dark";
- document.body.dataset.theme = newTheme;
- localStorage.setItem("usc_theme", newTheme);
- this.updateThemeButton();
- });
- });
- },
+  // Icono: luna (modo oscuro)
+  iconMoon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>`,
 
- updateThemeButton() {
- const isDark = document.body.dataset.theme === "dark";
- document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
- btn.textContent = isDark ? "" : "";
- btn.setAttribute("title", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
- });
- },
+  // Icono: campana de notificaciones
+  iconBell: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
 
- /**
- * Renderiza la barra superior estándar en las vistas
- */
- initHeader(activeModule = "") {
- const user = Auth.getUser();
- const role = Auth.getRole() || "INVITADO";
- const userInitials = user?.nombre ? user.nombre.substring(0, 2).toUpperCase() : "US";
+  // Icono: carrito de compras
+  iconCart: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
 
- // Insertar logos
- document.querySelectorAll(".brand-mark-slot").forEach(el => {
- el.innerHTML = this.logoSvg;
- });
+  // Icono: lupa de búsqueda
+  iconSearch: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`,
 
- // Actualizar nombre y rol
- const userNameEl = document.querySelector("#headerUserName");
- if (userNameEl && user) {
- userNameEl.textContent = user.nombre;
- }
+  /**
+   * Configura el tema claro / oscuro con persistencia
+   */
+  initTheme() {
+    const savedTheme = localStorage.getItem("usc_theme") || "light";
+    document.body.dataset.theme = savedTheme;
+    this.updateThemeButton();
 
- const roleBadgeEl = document.querySelector("#headerRoleBadge");
- if (roleBadgeEl) {
- roleBadgeEl.textContent = role;
- }
+    document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const isDark = document.body.dataset.theme === "dark";
+        const newTheme = isDark ? "light" : "dark";
+        document.body.dataset.theme = newTheme;
+        localStorage.setItem("usc_theme", newTheme);
+        this.updateThemeButton();
+      });
+    });
+  },
 
- const avatarEl = document.querySelector("#headerAvatar");
- if (avatarEl) {
- avatarEl.textContent = userInitials;
- }
+  updateThemeButton() {
+    const isDark = document.body.dataset.theme === "dark";
+    document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
+      btn.innerHTML = isDark ? this.iconSun : this.iconMoon;
+      btn.setAttribute("title", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    });
+  },
 
- // Configurar botón salir
- const logoutBtn = document.querySelector("#logoutBtn");
- if (logoutBtn) {
- logoutBtn.addEventListener("click", (e) => {
- e.preventDefault();
- Auth.logout();
- });
- }
+  /**
+   * Renderiza la barra superior estándar en las vistas
+   */
+  initHeader(activeModule = "") {
+    const user = Auth.getUser();
+    const role = Auth.getRole() || "INVITADO";
+    const userInitials = user?.nombre ? user.nombre.substring(0, 2).toUpperCase() : "US";
 
- this.initTheme();
- this.updateCartBadge();
- this.updateNotificationBadge();
- },
+    // Insertar logos
+    document.querySelectorAll(".brand-mark-slot").forEach(el => {
+      el.innerHTML = this.logoSvg;
+    });
 
- /**
- * Muestra un toast emergente
- */
- toast(message, type = "info") {
- let container = document.querySelector(".toast-container");
- if (!container) {
- container = document.createElement("div");
- container.className = "toast-container";
- document.body.appendChild(container);
- }
+    // Actualizar nombre y rol
+    const userNameEl = document.querySelector("#headerUserName");
+    if (userNameEl && user) {
+      userNameEl.textContent = user.nombre;
+    }
 
- const toast = document.createElement("div");
- toast.className = `toast ${type}`;
- toast.textContent = message;
+    const roleBadgeEl = document.querySelector("#headerRoleBadge");
+    if (roleBadgeEl) {
+      roleBadgeEl.textContent = role;
+    }
 
- container.appendChild(toast);
+    const avatarEl = document.querySelector("#headerAvatar");
+    if (avatarEl) {
+      avatarEl.textContent = userInitials;
+    }
 
- setTimeout(() => {
- toast.style.opacity = "0";
- toast.style.transform = "translateX(50px)";
- toast.style.transition = ".25s ease";
- setTimeout(() => toast.remove(), 250);
- }, 3500);
- },
+    // Configurar botón salir
+    const logoutBtn = document.querySelector("#logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        Auth.logout();
+      });
+    }
 
- /**
- * Actualiza el badge del carrito en el navbar
- */
- updateCartBadge() {
- const badge = document.querySelector("#cartBadge");
- if (!badge) return;
- const count = CartStore.getTotalItems();
- badge.textContent = count;
- badge.style.display = count > 0 ? "inline-flex" : "none";
- },
+    // Inyectar iconos SVG en botones de acción del topbar
+    document.querySelectorAll("a.icon-btn[aria-label='Notificaciones']").forEach(el => {
+      const badge = el.querySelector(".badge-count");
+      const badgeHtml = badge ? badge.outerHTML : "";
+      el.innerHTML = this.iconBell + badgeHtml;
+    });
+    document.querySelectorAll("a.icon-btn[aria-label='Ver Carrito']").forEach(el => {
+      const badge = el.querySelector(".badge-count");
+      const badgeHtml = badge ? badge.outerHTML : "";
+      el.innerHTML = this.iconCart + badgeHtml;
+    });
 
- /**
- * Actualiza el badge de notificaciones
- */
- async updateNotificationBadge() {
- const badge = document.querySelector("#notifBadge");
- if (!badge || !Auth.isAuthenticated()) return;
+    this.initTheme();
+    this.updateCartBadge();
+    this.updateNotificationBadge();
+  },
 
- try {
- const user = Auth.getUser();
- // Consultar al backend de notificaciones (o Supabase directamente)
- const res = await API.supabaseTable("notif_mensajes", `?usuario_id=eq.${user.id}&leido=eq.false&select=id`);
- const unreadCount = Array.isArray(res) ? res.length : 0;
- badge.textContent = unreadCount;
- badge.style.display = unreadCount > 0 ? "inline-flex" : "none";
- } catch (e) {
- // Ignorar si la tabla aún se está creando
- }
- }
+  /**
+   * Muestra un toast emergente
+   */
+  toast(message, type = "info") {
+    let container = document.querySelector(".toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.className = "toast-container";
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(50px)";
+      toast.style.transition = ".25s ease";
+      setTimeout(() => toast.remove(), 250);
+    }, 3500);
+  },
+
+  /**
+   * Actualiza el badge del carrito en el navbar
+   */
+  updateCartBadge() {
+    const badge = document.querySelector("#cartBadge");
+    if (!badge) return;
+    const count = CartStore.getTotalItems();
+    badge.textContent = count;
+    badge.style.display = count > 0 ? "inline-flex" : "none";
+
+    // Sincronizar badge de sidebar también
+    const sidebarBadge = document.querySelector("#sidebarCartBadge");
+    if (sidebarBadge) {
+      sidebarBadge.textContent = count;
+      sidebarBadge.style.display = count > 0 ? "inline-flex" : "none";
+    }
+  },
+
+  /**
+   * Actualiza el badge de notificaciones
+   */
+  async updateNotificationBadge() {
+    const badge = document.querySelector("#notifBadge");
+    if (!badge || !Auth.isAuthenticated()) return;
+
+    try {
+      const user = Auth.getUser();
+      const res = await API.supabaseTable("notif_mensajes", `?usuario_id=eq.${user.id}&leido=eq.false&select=id`);
+      const unreadCount = Array.isArray(res) ? res.length : 0;
+      badge.textContent = unreadCount;
+      badge.style.display = unreadCount > 0 ? "inline-flex" : "none";
+
+      // Sincronizar badge de sidebar
+      const sidebarBadge = document.querySelector("#sidebarNotifBadge");
+      if (sidebarBadge) {
+        sidebarBadge.textContent = unreadCount;
+        sidebarBadge.style.display = unreadCount > 0 ? "inline-flex" : "none";
+      }
+    } catch (e) {
+      // Ignorar si la tabla aun no esta disponible
+    }
+  }
 };
 
 window.UI = UI;
