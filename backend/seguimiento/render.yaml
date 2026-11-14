@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: marketplace-usc-seguimiento
+    runtime: python
+    rootDir: backend/seguimiento
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: URL_CONTABILIDAD
+        value: https://marketplace-usc-contabilidad.onrender.com/api
+      - key: URL_NOTIFICACIONES
+        value: https://marketplace-usc-notificaciones.onrender.com/api
+      - key: JWT_JWKS_URL
+        value: https://xmrlazemifmepyahqsrz.supabase.co/auth/v1/.well-known/jwks.json
