@@ -1,266 +1,265 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marketplace USC | Contabilidad & Escrow</title>
-  <link rel="stylesheet" href="styles/versand.css">
-  <link rel="stylesheet" href="styles/app.css">
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Marketplace USC | Contabilidad & Escrow</title>
+ <link rel="stylesheet" href="styles/versand.css">
+ <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark brand-mark-slot"></span>
-        <span>Marketplace USC</span>
-      </div>
-      <span class="side-label">Tesorería Central</span>
-      <nav class="nav">
-        <a href="admin-accounting.html" class="active"><button class="active" style="width:100%; text-align:left;">Contabilidad & Escrow</button></a>
-        <a href="seller-dashboard.html"><button style="width:100%; text-align:left;">Panel Operativo</button></a>
-        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
-        <a href="orders.html"><button style="width:100%; text-align:left;">Todas las Órdenes</button></a>
-      </nav>
-      <div class="sidebar-footer">
-        Universidad Santiago de Cali<br>
-        <strong style="color: var(--brand)">Equipo 6: Contabilidad</strong>
-      </div>
-    </aside>
+ <div class="shell">
+ <aside class="sidebar">
+ <div class="brand">
+ <span class="brand-mark brand-mark-slot"></span>
+ <span>Marketplace USC</span>
+ </div>
+ <span class="side-label">Tesorería Central</span>
+ <nav class="nav">
+ <a href="admin-accounting.html" class="active"><button class="active" style="width:100%; text-align:left;">Contabilidad & Escrow</button></a>
+ <a href="seller-dashboard.html"><button style="width:100%; text-align:left;">Panel Operativo</button></a>
+ <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
+ <a href="orders.html"><button style="width:100%; text-align:left;">Todas las Órdenes</button></a>
+ </nav>
+ <div class="sidebar-footer">
+ Universidad Santiago de Cali<br>
+ <strong style="color: var(--brand)">Equipo 6: Contabilidad</strong>
+ </div>
+ </aside>
 
-    <section class="main">
-      <header class="topbar">
-        <div class="topbar-title">
-          <b>Conciliación Financiera y Fondos en Custodia (Escrow)</b>
-          <span>Monitoreo de comisiones del 5%, retenciones y libro diario contable</span>
-        </div>
-        <div class="top-actions">
-          <button class="theme-toggle-btn icon-btn">☾</button>
-          <div class="avatar" id="headerAvatar">AD</div>
-          <span style="font-size:13px; font-weight:700;" id="headerUserName">Administrador</span>
-          <span class="badge badge-primary" id="headerRoleBadge">ADMIN</span>
-          <button class="btn btn-soft" id="logoutBtn">Salir</button>
-        </div>
-      </header>
+ <section class="main">
+ <header class="topbar">
+ <div class="topbar-title">
+ <b>Conciliación Financiera y Fondos en Custodia (Escrow)</b>
+ <span>Monitoreo de comisiones del 5%, retenciones y libro diario contable</span>
+ </div>
+ <div class="top-actions">
+ <button class="theme-toggle-btn icon-btn"></button>
+ <div class="avatar" id="headerAvatar">AD</div>
+ <span style="font-size:13px; font-weight:700;" id="headerUserName">Administrador</span>
+ <span class="badge badge-primary" id="headerRoleBadge">ADMIN</span>
+ <button class="btn btn-soft" id="logoutBtn">Salir</button>
+ </div>
+ </header>
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <span class="eyebrow">Equipo 6: Contabilidad (FastAPI Backend)</span>
-            <h1>Balance Financiero del Marketplace</h1>
-            <p class="lead">Regla de negocio: <strong>5% de comisión fija de plataforma</strong>. Los fondos se liberan al cumplirse <strong>72 horas tras la entrega</strong> o mediante conformidad directa del comprador.</p>
-          </div>
-          <div class="page-actions">
-            <button class="btn btn-soft" id="btnRunEscrowCheck">⚙ Ejecutar Conciliación 72h</button>
-          </div>
-        </div>
+ <main class="content">
+ <div class="page-head">
+ <div>
+ <span class="eyebrow">Equipo 6: Contabilidad (FastAPI Backend)</span>
+ <h1>Balance Financiero del Marketplace</h1>
+ <p class="lead">Regla de negocio: <strong>5% de comisión fija de plataforma</strong>. Los fondos se liberan al cumplirse <strong>72 horas tras la entrega</strong> o mediante conformidad directa del comprador.</p>
+ </div>
+ <div class="page-actions">
+ <button class="btn btn-soft" id="btnRunEscrowCheck"> Ejecutar Conciliación 72h</button>
+ </div>
+ </div>
 
-        <!-- Indicadores Financieros Principales -->
-        <div class="kpi-grid">
-          <article class="card kpi">
-            <span class="kpi-label">Ventas Brutas Totales</span>
-            <div class="kpi-value" id="kpiVentasBrutas">$ 0</div>
-            <span class="trend up">Volumen transaccionado</span>
-          </article>
+ <!-- Indicadores Financieros Principales -->
+ <div class="kpi-grid">
+ <article class="card kpi">
+ <span class="kpi-label">Ventas Brutas Totales</span>
+ <div class="kpi-value" id="kpiVentasBrutas">$ 0</div>
+ <span class="trend up">Volumen transaccionado</span>
+ </article>
 
-          <article class="card kpi">
-            <span class="kpi-label">Comisiones Plataforma (5%)</span>
-            <div class="kpi-value" id="kpiComisiones" style="color: var(--brand)">$ 0</div>
-            <span class="trend up">Ingreso neto institucional</span>
-          </article>
+ <article class="card kpi">
+ <span class="kpi-label">Comisiones Plataforma (5%)</span>
+ <div class="kpi-value" id="kpiComisiones" style="color: var(--brand)">$ 0</div>
+ <span class="trend up">Ingreso neto institucional</span>
+ </article>
 
-          <article class="card kpi">
-            <span class="kpi-label">Fondos en Escrow (Retenidos)</span>
-            <div class="kpi-value" id="kpiEscrowRetenido" style="color: var(--warning)">$ 0</div>
-            <span class="trend down">En custodia pre-liberación</span>
-          </article>
+ <article class="card kpi">
+ <span class="kpi-label">Fondos en Escrow (Retenidos)</span>
+ <div class="kpi-value" id="kpiEscrowRetenido" style="color: var(--warning)">$ 0</div>
+ <span class="trend down">En custodia pre-liberación</span>
+ </article>
 
-          <article class="card kpi">
-            <span class="kpi-label">Fondos Liberados</span>
-            <div class="kpi-value" id="kpiEscrowLiberado" style="color: var(--success)">$ 0</div>
-            <span class="trend up">Dispersados a vendedores</span>
-          </article>
-        </div>
+ <article class="card kpi">
+ <span class="kpi-label">Fondos Liberados</span>
+ <div class="kpi-value" id="kpiEscrowLiberado" style="color: var(--success)">$ 0</div>
+ <span class="trend up">Dispersados a vendedores</span>
+ </article>
+ </div>
 
-        <!-- Tabla 1: Fondos en Custodia (Escrow) -->
-        <div class="card panel" style="margin-top: 24px;">
-          <div class="panel-head">
-            <h2>Partidas de Custodia Escrow por Orden</h2>
-            <span class="muted" id="escrowTableCount">Cargando partidas...</span>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table" style="width: 100%;">
-              <thead>
-                <tr>
-                  <th>ID Orden / Fecha</th>
-                  <th>Monto Bruto</th>
-                  <th>Comisión USC (5%)</th>
-                  <th>Neto Vendedor (95%)</th>
-                  <th>Estado Escrow</th>
-                  <th>Liberación / Criterio</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody id="escrowTableBody">
-                <tr>
-                  <td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">
-                    Consultando datos de custodia desde Supabase...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+ <!-- Tabla 1: Fondos en Custodia (Escrow) -->
+ <div class="card panel" style="margin-top: 24px;">
+ <div class="panel-head">
+ <h2>Partidas de Custodia Escrow por Orden</h2>
+ <span class="muted" id="escrowTableCount">Cargando partidas...</span>
+ </div>
+ <div style="overflow-x: auto;">
+ <table class="table" style="width: 100%;">
+ <thead>
+ <tr>
+ <th>ID Orden / Fecha</th>
+ <th>Monto Bruto</th>
+ <th>Comisión USC (5%)</th>
+ <th>Neto Vendedor (95%)</th>
+ <th>Estado Escrow</th>
+ <th>Liberación / Criterio</th>
+ <th>Acción</th>
+ </tr>
+ </thead>
+ <tbody id="escrowTableBody">
+ <tr>
+ <td colspan="7" style="text-align: center; padding: 30px; color: var(--muted);">
+ Consultando datos de custodia desde Supabase...
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
 
-        <!-- Tabla 2: Libro Diario Contable -->
-        <div class="card panel" style="margin-top: 24px;">
-          <div class="panel-head">
-            <h2>Libro Diario de Movimientos Contables</h2>
-            <span class="muted">Asientos contables inmutables de débito y crédito</span>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table" style="width: 100%;">
-              <thead>
-                <tr>
-                  <th>Fecha & Hora</th>
-                  <th>Tipo de Asiento</th>
-                  <th>Naturaleza</th>
-                  <th>Monto COP</th>
-                  <th>Descripción Contable</th>
-                </tr>
-              </thead>
-              <tbody id="journalTableBody">
-                <tr>
-                  <td colspan="5" style="text-align: center; padding: 30px; color: var(--muted);">
-                    Cargando libro contable...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
-    </section>
-  </div>
+ <!-- Tabla 2: Libro Diario Contable -->
+ <div class="card panel" style="margin-top: 24px;">
+ <div class="panel-head">
+ <h2>Libro Diario de Movimientos Contables</h2>
+ <span class="muted">Asientos contables inmutables de débito y crédito</span>
+ </div>
+ <div style="overflow-x: auto;">
+ <table class="table" style="width: 100%;">
+ <thead>
+ <tr>
+ <th>Fecha & Hora</th>
+ <th>Tipo de Asiento</th>
+ <th>Naturaleza</th>
+ <th>Monto COP</th>
+ <th>Descripción Contable</th>
+ </tr>
+ </thead>
+ <tbody id="journalTableBody">
+ <tr>
+ <td colspan="5" style="text-align: center; padding: 30px; color: var(--muted);">
+ Cargando libro contable...
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </main>
+ </section>
+ </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/ui.js"></script>
+ <script src="js/config.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/api.js"></script>
+ <script src="js/ui.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      if (!Auth.requireAuth(["ADMIN", "VENDEDOR"])) return;
-      UI.initHeader("accounting");
+ <script>
+ document.addEventListener("DOMContentLoaded", async () => {
+ if (!Auth.requireAuth(["ADMIN", "VENDEDOR"])) return;
+ UI.initHeader("accounting");
 
-      const kpiVentasBrutas = document.querySelector("#kpiVentasBrutas");
-      const kpiComisiones = document.querySelector("#kpiComisiones");
-      const kpiEscrowRetenido = document.querySelector("#kpiEscrowRetenido");
-      const kpiEscrowLiberado = document.querySelector("#kpiEscrowLiberado");
-      const escrowTableBody = document.querySelector("#escrowTableBody");
-      const escrowTableCount = document.querySelector("#escrowTableCount");
-      const journalTableBody = document.querySelector("#journalTableBody");
-      const btnRunEscrowCheck = document.querySelector("#btnRunEscrowCheck");
+ const kpiVentasBrutas = document.querySelector("#kpiVentasBrutas");
+ const kpiComisiones = document.querySelector("#kpiComisiones");
+ const kpiEscrowRetenido = document.querySelector("#kpiEscrowRetenido");
+ const kpiEscrowLiberado = document.querySelector("#kpiEscrowLiberado");
+ const escrowTableBody = document.querySelector("#escrowTableBody");
+ const escrowTableCount = document.querySelector("#escrowTableCount");
+ const journalTableBody = document.querySelector("#journalTableBody");
+ const btnRunEscrowCheck = document.querySelector("#btnRunEscrowCheck");
 
-      let escrowItems = [];
+ let escrowItems = [];
 
-      async function loadAccounting() {
-        try {
-          // Consultar registros de cont_escrow
-          const res = await API.supabaseTable("cont_escrow", "?order=creado_en.desc");
-          escrowItems = Array.isArray(res) ? res : [];
+ async function loadAccounting() {
+ try {
+ // Consultar registros de cont_escrow
+ const res = await API.supabaseTable("cont_escrow", "?order=creado_en.desc");
+ escrowItems = Array.isArray(res) ? res : [];
 
-          // Calcular métricas
-          const totalBruto = escrowItems.reduce((acc, i) => acc + Number(i.monto_bruto), 0);
-          const totalComisiones = escrowItems.reduce((acc, i) => acc + Number(i.comision_plataforma), 0);
-          const totalRetenido = escrowItems.filter(i => i.estado_escrow === "RETENIDO").reduce((acc, i) => acc + Number(i.monto_neto_vendedor), 0);
-          const totalLiberado = escrowItems.filter(i => i.estado_escrow === "LIBERADO").reduce((acc, i) => acc + Number(i.monto_neto_vendedor), 0);
+ // Calcular métricas
+ const totalBruto = escrowItems.reduce((acc, i) => acc + Number(i.monto_bruto), 0);
+ const totalComisiones = escrowItems.reduce((acc, i) => acc + Number(i.comision_plataforma), 0);
+ const totalRetenido = escrowItems.filter(i => i.estado_escrow === "RETENIDO").reduce((acc, i) => acc + Number(i.monto_neto_vendedor), 0);
+ const totalLiberado = escrowItems.filter(i => i.estado_escrow === "LIBERADO").reduce((acc, i) => acc + Number(i.monto_neto_vendedor), 0);
 
-          kpiVentasBrutas.textContent = API.formatCOP(totalBruto);
-          kpiComisiones.textContent = API.formatCOP(totalComisiones);
-          kpiEscrowRetenido.textContent = API.formatCOP(totalRetenido);
-          kpiEscrowLiberado.textContent = API.formatCOP(totalLiberado);
+ kpiVentasBrutas.textContent = API.formatCOP(totalBruto);
+ kpiComisiones.textContent = API.formatCOP(totalComisiones);
+ kpiEscrowRetenido.textContent = API.formatCOP(totalRetenido);
+ kpiEscrowLiberado.textContent = API.formatCOP(totalLiberado);
 
-          escrowTableCount.textContent = `${escrowItems.length} registros`;
+ escrowTableCount.textContent = `${escrowItems.length} registros`;
 
-          if (escrowItems.length === 0) {
-            escrowTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--muted);">No hay retenciones Escrow registradas todavía. Se generarán al realizar compras.</td></tr>`;
-          } else {
-            escrowTableBody.innerHTML = escrowItems.map(item => {
-              const badgeState = item.estado_escrow === "LIBERADO" 
-                ? '<span class="badge badge-success">LIBERADO</span>'
-                : item.estado_escrow === "BLOQUEADO_PQR"
-                ? '<span class="badge badge-danger">BLOQUEADO PQR</span>'
-                : '<span class="badge badge-warning">RETENIDO</span>';
+ if (escrowItems.length === 0) {
+ escrowTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--muted);">No hay retenciones Escrow registradas todavía. Se generarán al realizar compras.</td></tr>`;
+ } else {
+ escrowTableBody.innerHTML = escrowItems.map(item => {
+ const badgeState = item.estado_escrow === "LIBERADO" 
+ ? '<span class="badge badge-success">LIBERADO</span>'
+ : item.estado_escrow === "BLOQUEADO_PQR"
+ ? '<span class="badge badge-danger">BLOQUEADO PQR</span>'
+ : '<span class="badge badge-warning">RETENIDO</span>';
 
-              return `
-                <tr>
-                  <td>
-                    <span style="font-size:11px; font-family:monospace;">${item.pedido_id ? item.pedido_id.substring(0,8) : 'N/A'}</span><br>
-                    <small class="muted">${API.formatDate(item.creado_en)}</small>
-                  </td>
-                  <td><strong>${API.formatCOP(item.monto_bruto)}</strong></td>
-                  <td style="color:var(--brand); font-weight:700;">${API.formatCOP(item.comision_plataforma)} (5%)</td>
-                  <td style="font-weight:750;">${API.formatCOP(item.monto_neto_vendedor)}</td>
-                  <td>${badgeState}</td>
-                  <td style="font-size:12px;">
-                    ${item.motivo_liberacion || 'Esperando entrega + 72h'}
-                  </td>
-                  <td>
-                    ${item.estado_escrow === 'RETENIDO' ? `
-                      <button class="btn btn-soft btn-liberar-admin" data-id="${item.id}" style="font-size:11px; padding:4px 8px;">
-                        Liberar Fondos
-                      </button>
-                    ` : '<span style="color:var(--muted); font-size:11px;">Completado</span>'}
-                  </td>
-                </tr>
-              `;
-            }).join("");
+ return `
+ <tr>
+ <td>
+ <span style="font-size:11px; font-family:monospace;">${item.pedido_id ? item.pedido_id.substring(0,8) : 'N/A'}</span><br>
+ <small class="muted">${API.formatDate(item.creado_en)}</small>
+ </td>
+ <td><strong>${API.formatCOP(item.monto_bruto)}</strong></td>
+ <td style="color:var(--brand); font-weight:700;">${API.formatCOP(item.comision_plataforma)} (5%)</td>
+ <td style="font-weight:750;">${API.formatCOP(item.monto_neto_vendedor)}</td>
+ <td>${badgeState}</td>
+ <td style="font-size:12px;">
+ ${item.motivo_liberacion || 'Esperando entrega + 72h'}
+ </td>
+ <td>
+ ${item.estado_escrow === 'RETENIDO' ? `
+ <button class="btn btn-soft btn-liberar-admin" data-id="${item.id}" style="font-size:11px; padding:4px 8px;">
+ Liberar Fondos
+ </button>
+ ` : '<span style="color:var(--muted); font-size:11px;">Completado</span>'}
+ </td>
+ </tr>
+ `;
+ }).join("");
 
-            document.querySelectorAll(".btn-liberar-admin").forEach(btn => {
-              btn.addEventListener("click", async () => {
-                if (confirm("¿Liberar estos fondos de custodia manualmente como Administrador?")) {
-                  await API.supabaseUpdate("cont_escrow", `?id=eq.${btn.dataset.id}`, {
-                    estado_escrow: "LIBERADO",
-                    motivo_liberacion: "MANUAL_ADMIN",
-                    fecha_liberacion_real: new Date().toISOString()
-                  });
-                  UI.toast("Fondos liberados con éxito.", "success");
-                  loadAccounting();
-                }
-              });
-            });
-          }
+ document.querySelectorAll(".btn-liberar-admin").forEach(btn => {
+ btn.addEventListener("click", async () => {
+ if (confirm("¿Liberar estos fondos de custodia manualmente como Administrador?")) {
+ await API.supabaseUpdate("cont_escrow", `?id=eq.${btn.dataset.id}`, {
+ estado_escrow: "LIBERADO",
+ motivo_liberacion: "MANUAL_ADMIN",
+ fecha_liberacion_real: new Date().toISOString()
+ });
+ UI.toast("Fondos liberados con éxito.", "success");
+ loadAccounting();
+ }
+ });
+ });
+ }
 
-          // Consultar libro diario cont_movimientos
-          const movs = await API.supabaseTable("cont_movimientos", "?order=creado_en.desc&limit=25");
-          const movimientos = Array.isArray(movs) ? movs : [];
+ // Consultar libro diario cont_movimientos
+ const movs = await API.supabaseTable("cont_movimientos", "?order=creado_en.desc&limit=25");
+ const movimientos = Array.isArray(movs) ? movs : [];
 
-          if (movimientos.length === 0) {
-            journalTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">Sin asientos contables aún.</td></tr>`;
-          } else {
-            journalTableBody.innerHTML = movimientos.map(m => `
-              <tr>
-                <td style="font-size:12px; color:var(--muted);">${API.formatDate(m.creado_en)}</td>
-                <td><strong>${m.tipo}</strong></td>
-                <td><span class="badge ${m.naturaleza === 'CREDITO' ? 'badge-success' : 'badge-soft'}">${m.naturaleza}</span></td>
-                <td><strong>${API.formatCOP(m.monto)}</strong></td>
-                <td style="font-size:12.5px;">${m.descripcion}</td>
-              </tr>
-            `).join("");
-          }
+ if (movimientos.length === 0) {
+ journalTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">Sin asientos contables aún.</td></tr>`;
+ } else {
+ journalTableBody.innerHTML = movimientos.map(m => `
+ <tr>
+ <td style="font-size:12px; color:var(--muted);">${API.formatDate(m.creado_en)}</td>
+ <td><strong>${m.tipo}</strong></td>
+ <td><span class="badge ${m.naturaleza === 'CREDITO' ? 'badge-success' : 'badge-soft'}">${m.naturaleza}</span></td>
+ <td><strong>${API.formatCOP(m.monto)}</strong></td>
+ <td style="font-size:12.5px;">${m.descripcion}</td>
+ </tr>
+ `).join("");
+ }
 
-        } catch (e) {
-          console.warn("Carga de contabilidad:", e.message);
-        }
-      }
+ } catch (e) {
+ console.warn("Carga de contabilidad:", e.message);
+ }
+ }
 
-      btnRunEscrowCheck.addEventListener("click", () => {
-        UI.toast("Verificación de plazos de 72h ejecutada. Todo el saldo en custodia está conciliado.", "info");
-      });
+ btnRunEscrowCheck.addEventListener("click", () => {
+ UI.toast("Verificación de plazos de 72h ejecutada. Todo el saldo en custodia está conciliado.", "info");
+ });
 
-      await loadAccounting();
-    });
-  </script>
+ await loadAccounting();
+ });
+ </script>
 </body>
 </html>
-

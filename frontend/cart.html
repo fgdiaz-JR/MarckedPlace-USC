@@ -1,258 +1,257 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marketplace USC | Carrito de Compras</title>
-  <link rel="stylesheet" href="styles/versand.css">
-  <link rel="stylesheet" href="styles/app.css">
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Marketplace USC | Carrito de Compras</title>
+ <link rel="stylesheet" href="styles/versand.css">
+ <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark brand-mark-slot"></span>
-        <span>Marketplace USC</span>
-      </div>
-      <span class="side-label">Exploración</span>
-      <nav class="nav">
-        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
-        <a href="cart.html" class="active"><button class="active" style="width:100%; text-align:left;">Mi Carrito</button></a>
-        <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
-        <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
-        <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones</button></a>
-      </nav>
-      <div class="sidebar-footer">
-        Universidad Santiago de Cali<br>
-        <strong style="color: var(--brand)">Equipo 4: Carrito</strong>
-      </div>
-    </aside>
+ <div class="shell">
+ <aside class="sidebar">
+ <div class="brand">
+ <span class="brand-mark brand-mark-slot"></span>
+ <span>Marketplace USC</span>
+ </div>
+ <span class="side-label">Exploración</span>
+ <nav class="nav">
+ <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
+ <a href="cart.html" class="active"><button class="active" style="width:100%; text-align:left;">Mi Carrito</button></a>
+ <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
+ <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
+ <a href="notifications.html"><button style="width:100%; text-align:left;">Notificaciones</button></a>
+ </nav>
+ <div class="sidebar-footer">
+ Universidad Santiago de Cali<br>
+ <strong style="color: var(--brand)">Equipo 4: Carrito</strong>
+ </div>
+ </aside>
 
-    <section class="main">
-      <header class="topbar">
-        <div class="topbar-title">
-          <b>Carrito de Compras</b>
-          <span>Gestión de artículos y cálculo de costos</span>
-        </div>
+ <section class="main">
+ <header class="topbar">
+ <div class="topbar-title">
+ <b>Carrito de Compras</b>
+ <span>Gestión de artículos y cálculo de costos</span>
+ </div>
 
-        <div class="top-actions">
-          <button class="theme-toggle-btn icon-btn" aria-label="Cambiar tema">☾</button>
-          <a href="notifications.html" class="icon-btn" aria-label="Notificaciones" style="text-decoration:none; position:relative;">
-            🔔
-            <span class="badge-count" id="notifBadge" style="position:absolute; top:-4px; right:-4px; display:none;">0</span>
-          </a>
-          <div class="avatar" id="headerAvatar">US</div>
-          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
-          <button class="btn btn-soft" id="logoutBtn">Salir</button>
-        </div>
-      </header>
+ <div class="top-actions">
+ <button class="theme-toggle-btn icon-btn" aria-label="Cambiar tema"></button>
+ <a href="notifications.html" class="icon-btn" aria-label="Notificaciones" style="text-decoration:none; position:relative;">
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <span class="eyebrow">Equipo 4: Carrito de Compras</span>
-            <h1>Bolsa de Pedidos</h1>
-            <p class="lead">Revisa tus productos seleccionados antes de pasar a la pasarela de pagos.</p>
-          </div>
-          <div class="page-actions">
-            <button type="button" class="btn btn-soft" id="clearCartBtn">Vaciar Carrito</button>
-            <a href="catalog.html" class="btn btn-soft">Seguir Comprando</a>
-          </div>
-        </div>
+ <span class="badge-count" id="notifBadge" style="position:absolute; top:-4px; right:-4px; display:none;">0</span>
+ </a>
+ <div class="avatar" id="headerAvatar">US</div>
+ <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+ <button class="btn btn-soft" id="logoutBtn">Salir</button>
+ </div>
+ </header>
 
-        <!-- Carrito vacío -->
-        <div id="emptyCartView" style="display: none; text-align: center; padding: 60px 20px; background: var(--surface); border: 1px dashed var(--line); border-radius: 15px;">
-          <h2 style="margin-bottom: 8px;">Tu carrito está vacío</h2>
-          <p class="muted" style="margin-bottom: 20px;">Explora nuestro catálogo y agrega productos para comenzar.</p>
-          <a href="catalog.html" class="btn btn-primary">Ir al Catálogo de Productos</a>
-        </div>
+ <main class="content">
+ <div class="page-head">
+ <div>
+ <span class="eyebrow">Equipo 4: Carrito de Compras</span>
+ <h1>Bolsa de Pedidos</h1>
+ <p class="lead">Revisa tus productos seleccionados antes de pasar a la pasarela de pagos.</p>
+ </div>
+ <div class="page-actions">
+ <button type="button" class="btn btn-soft" id="clearCartBtn">Vaciar Carrito</button>
+ <a href="catalog.html" class="btn btn-soft">Seguir Comprando</a>
+ </div>
+ </div>
 
-        <!-- Layout con artículos y resumen -->
-        <div class="cart-layout" id="cartLayoutView">
-          <!-- Lista de artículos -->
-          <div class="card panel">
-            <div class="panel-head">
-              <h2>Artículos en tu orden</h2>
-              <span class="muted" id="cartItemsCount">0 artículos</span>
-            </div>
-            <div id="cartItemsList"></div>
-          </div>
+ <!-- Carrito vacío -->
+ <div id="emptyCartView" style="display: none; text-align: center; padding: 60px 20px; background: var(--surface); border: 1px dashed var(--line); border-radius: 15px;">
+ <h2 style="margin-bottom: 8px;">Tu carrito está vacío</h2>
+ <p class="muted" style="margin-bottom: 20px;">Explora nuestro catálogo y agrega productos para comenzar.</p>
+ <a href="catalog.html" class="btn btn-primary">Ir al Catálogo de Productos</a>
+ </div>
 
-          <!-- Resumen financiero y reglas de negocio -->
-          <div>
-            <div class="order-summary-box">
-              <h2 style="font-size: 18px; margin-bottom: 14px;">Resumen del Pedido</h2>
+ <!-- Layout con artículos y resumen -->
+ <div class="cart-layout" id="cartLayoutView">
+ <!-- Lista de artículos -->
+ <div class="card panel">
+ <div class="panel-head">
+ <h2>Artículos en tu orden</h2>
+ <span class="muted" id="cartItemsCount">0 artículos</span>
+ </div>
+ <div id="cartItemsList"></div>
+ </div>
 
-              <!-- Banner dinámico de envío gratis -->
-              <div id="freeShippingBanner" class="free-shipping-bar"></div>
+ <!-- Resumen financiero y reglas de negocio -->
+ <div>
+ <div class="order-summary-box">
+ <h2 style="font-size: 18px; margin-bottom: 14px;">Resumen del Pedido</h2>
 
-              <div class="summary-row">
-                <span>Subtotal productos</span>
-                <strong id="summarySubtotal">$ 0</strong>
-              </div>
+ <!-- Banner dinámico de envío gratis -->
+ <div id="freeShippingBanner" class="free-shipping-bar"></div>
 
-              <div class="summary-row">
-                <span>Impuestos IVA (19%)</span>
-                <strong id="summaryTax">$ 0</strong>
-              </div>
+ <div class="summary-row">
+ <span>Subtotal productos</span>
+ <strong id="summarySubtotal">$ 0</strong>
+ </div>
 
-              <div class="summary-row">
-                <span>Costo de envío</span>
-                <strong id="summaryShipping">$ 0</strong>
-              </div>
+ <div class="summary-row">
+ <span>Impuestos IVA (19%)</span>
+ <strong id="summaryTax">$ 0</strong>
+ </div>
 
-              <div class="summary-row total">
-                <span>Total a Pagar</span>
-                <strong id="summaryTotal" style="color: var(--brand);">$ 0</strong>
-              </div>
+ <div class="summary-row">
+ <span>Costo de envío</span>
+ <strong id="summaryShipping">$ 0</strong>
+ </div>
 
-              <div style="margin-top: 20px;">
-                <button type="button" class="btn btn-primary" id="checkoutBtn" style="width: 100%; padding: 14px; font-size: 15px;">
-                  Proceder al Checkout &rarr;
-                </button>
-              </div>
+ <div class="summary-row total">
+ <span>Total a Pagar</span>
+ <strong id="summaryTotal" style="color: var(--brand);">$ 0</strong>
+ </div>
 
-              <p class="muted" style="font-size: 11.5px; text-align: center; margin-top: 14px; line-height: 1.4;">
-                🛡 Transacciones protegidas por el sistema de retención Escrow (Equipo 6) y pasarela segura (Equipo 2).
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-    </section>
-  </div>
+ <div style="margin-top: 20px;">
+ <button type="button" class="btn btn-primary" id="checkoutBtn" style="width: 100%; padding: 14px; font-size: 15px;">
+ Proceder al Checkout &rarr;
+ </button>
+ </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/cart-store.js"></script>
-  <script src="js/ui.js"></script>
+ <p class="muted" style="font-size: 11.5px; text-align: center; margin-top: 14px; line-height: 1.4;">
+ Transacciones protegidas por el sistema de retención Escrow (Equipo 6) y pasarela segura (Equipo 2).
+ </p>
+ </div>
+ </div>
+ </div>
+ </main>
+ </section>
+ </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      UI.initHeader("cart");
+ <script src="js/config.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/api.js"></script>
+ <script src="js/cart-store.js"></script>
+ <script src="js/ui.js"></script>
 
-      const emptyCartView = document.querySelector("#emptyCartView");
-      const cartLayoutView = document.querySelector("#cartLayoutView");
-      const cartItemsList = document.querySelector("#cartItemsList");
-      const cartItemsCount = document.querySelector("#cartItemsCount");
-      const clearCartBtn = document.querySelector("#clearCartBtn");
+ <script>
+ document.addEventListener("DOMContentLoaded", () => {
+ UI.initHeader("cart");
 
-      const summarySubtotal = document.querySelector("#summarySubtotal");
-      const summaryTax = document.querySelector("#summaryTax");
-      const summaryShipping = document.querySelector("#summaryShipping");
-      const summaryTotal = document.querySelector("#summaryTotal");
-      const freeShippingBanner = document.querySelector("#freeShippingBanner");
-      const checkoutBtn = document.querySelector("#checkoutBtn");
+ const emptyCartView = document.querySelector("#emptyCartView");
+ const cartLayoutView = document.querySelector("#cartLayoutView");
+ const cartItemsList = document.querySelector("#cartItemsList");
+ const cartItemsCount = document.querySelector("#cartItemsCount");
+ const clearCartBtn = document.querySelector("#clearCartBtn");
 
-      function renderCart() {
-        const items = CartStore.getItems();
-        const totals = CartStore.getTotals();
+ const summarySubtotal = document.querySelector("#summarySubtotal");
+ const summaryTax = document.querySelector("#summaryTax");
+ const summaryShipping = document.querySelector("#summaryShipping");
+ const summaryTotal = document.querySelector("#summaryTotal");
+ const freeShippingBanner = document.querySelector("#freeShippingBanner");
+ const checkoutBtn = document.querySelector("#checkoutBtn");
 
-        if (items.length === 0) {
-          emptyCartView.style.display = "block";
-          cartLayoutView.style.display = "none";
-          return;
-        }
+ function renderCart() {
+ const items = CartStore.getItems();
+ const totals = CartStore.getTotals();
 
-        emptyCartView.style.display = "none";
-        cartLayoutView.style.display = "grid";
-        cartItemsCount.textContent = `${items.length} tipo(s) de artículo (${CartStore.getTotalItems()} unidades)`;
+ if (items.length === 0) {
+ emptyCartView.style.display = "block";
+ cartLayoutView.style.display = "none";
+ return;
+ }
 
-        // Renderizar banner de envío gratis
-        if (totals.envioGratis) {
-          freeShippingBanner.innerHTML = `🎉 <strong>¡Felicitaciones!</strong> Tu compra supera $200.000 COP y tienes <strong>ENVÍO GRATIS</strong>.`;
-          freeShippingBanner.style.background = "var(--success-soft)";
-          freeShippingBanner.style.color = "var(--success)";
-        } else {
-          freeShippingBanner.innerHTML = `🚚 Agrega <strong>${API.formatCOP(totals.faltaParaEnvioGratis)}</strong> más en productos para obtener <strong>ENVÍO GRATIS</strong>.`;
-          freeShippingBanner.style.background = "var(--brand-soft)";
-          freeShippingBanner.style.color = "var(--brand-dark)";
-        }
+ emptyCartView.style.display = "none";
+ cartLayoutView.style.display = "grid";
+ cartItemsCount.textContent = `${items.length} tipo(s) de artículo (${CartStore.getTotalItems()} unidades)`;
 
-        // Renderizar filas de productos
-        cartItemsList.innerHTML = items.map(item => `
-          <div class="cart-item" data-id="${item.id}">
-            <img src="${item.imagen_url || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=200&q=80'}" alt="${item.nombre}">
-            <div>
-              <h4 style="font-size: 15px; margin-bottom: 4px; color: var(--ink);">${item.nombre}</h4>
-              <span class="muted" style="font-size: 12px;">Precio unitario: ${API.formatCOP(item.precio)}</span>
-            </div>
-            <div class="cart-qty-ctrl">
-              <button type="button" class="btn-qty-minus" data-id="${item.id}">-</button>
-              <span>${item.cantidad}</span>
-              <button type="button" class="btn-qty-plus" data-id="${item.id}">+</button>
-            </div>
-            <div style="text-align: right;">
-              <strong style="font-size: 15px; color: var(--ink);">${API.formatCOP(item.precio * item.cantidad)}</strong><br>
-              <button type="button" class="btn-remove-item" data-id="${item.id}" style="background: none; border: none; color: var(--danger); font-size: 12px; cursor: pointer; padding: 4px 0;">Eliminar</button>
-            </div>
-          </div>
-        `).join("");
+ // Renderizar banner de envío gratis
+ if (totals.envioGratis) {
+ freeShippingBanner.innerHTML = ` <strong>¡Felicitaciones!</strong> Tu compra supera $200.000 COP y tienes <strong>ENVÍO GRATIS</strong>.`;
+ freeShippingBanner.style.background = "var(--success-soft)";
+ freeShippingBanner.style.color = "var(--success)";
+ } else {
+ freeShippingBanner.innerHTML = ` Agrega <strong>${API.formatCOP(totals.faltaParaEnvioGratis)}</strong> más en productos para obtener <strong>ENVÍO GRATIS</strong>.`;
+ freeShippingBanner.style.background = "var(--brand-soft)";
+ freeShippingBanner.style.color = "var(--brand-dark)";
+ }
 
-        // Resumen
-        summarySubtotal.textContent = API.formatCOP(totals.subtotal);
-        summaryTax.textContent = API.formatCOP(totals.impuestos);
-        summaryShipping.textContent = totals.costoEnvio === 0 ? "GRATIS ($0)" : API.formatCOP(totals.costoEnvio);
-        summaryTotal.textContent = API.formatCOP(totals.total);
+ // Renderizar filas de productos
+ cartItemsList.innerHTML = items.map(item => `
+ <div class="cart-item" data-id="${item.id}">
+ <img src="${item.imagen_url || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=200&q=80'}" alt="${item.nombre}">
+ <div>
+ <h4 style="font-size: 15px; margin-bottom: 4px; color: var(--ink);">${item.nombre}</h4>
+ <span class="muted" style="font-size: 12px;">Precio unitario: ${API.formatCOP(item.precio)}</span>
+ </div>
+ <div class="cart-qty-ctrl">
+ <button type="button" class="btn-qty-minus" data-id="${item.id}">-</button>
+ <span>${item.cantidad}</span>
+ <button type="button" class="btn-qty-plus" data-id="${item.id}">+</button>
+ </div>
+ <div style="text-align: right;">
+ <strong style="font-size: 15px; color: var(--ink);">${API.formatCOP(item.precio * item.cantidad)}</strong><br>
+ <button type="button" class="btn-remove-item" data-id="${item.id}" style="background: none; border: none; color: var(--danger); font-size: 12px; cursor: pointer; padding: 4px 0;">Eliminar</button>
+ </div>
+ </div>
+ `).join("");
 
-        // Eventos en los controles de cantidad
-        document.querySelectorAll(".btn-qty-minus").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.dataset.id;
-            const item = items.find(i => i.id === id);
-            if (item) {
-              CartStore.updateQuantity(id, item.cantidad - 1);
-              renderCart();
-            }
-          });
-        });
+ // Resumen
+ summarySubtotal.textContent = API.formatCOP(totals.subtotal);
+ summaryTax.textContent = API.formatCOP(totals.impuestos);
+ summaryShipping.textContent = totals.costoEnvio === 0 ? "GRATIS ($0)" : API.formatCOP(totals.costoEnvio);
+ summaryTotal.textContent = API.formatCOP(totals.total);
 
-        document.querySelectorAll(".btn-qty-plus").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.dataset.id;
-            const item = items.find(i => i.id === id);
-            if (item) {
-              try {
-                CartStore.updateQuantity(id, item.cantidad + 1);
-                renderCart();
-              } catch (e) {
-                UI.toast(e.message, "warning");
-              }
-            }
-          });
-        });
+ // Eventos en los controles de cantidad
+ document.querySelectorAll(".btn-qty-minus").forEach(btn => {
+ btn.addEventListener("click", () => {
+ const id = btn.dataset.id;
+ const item = items.find(i => i.id === id);
+ if (item) {
+ CartStore.updateQuantity(id, item.cantidad - 1);
+ renderCart();
+ }
+ });
+ });
 
-        document.querySelectorAll(".btn-remove-item").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.dataset.id;
-            CartStore.removeItem(id);
-            UI.toast("Producto eliminado del carrito", "info");
-            renderCart();
-          });
-        });
-      }
+ document.querySelectorAll(".btn-qty-plus").forEach(btn => {
+ btn.addEventListener("click", () => {
+ const id = btn.dataset.id;
+ const item = items.find(i => i.id === id);
+ if (item) {
+ try {
+ CartStore.updateQuantity(id, item.cantidad + 1);
+ renderCart();
+ } catch (e) {
+ UI.toast(e.message, "warning");
+ }
+ }
+ });
+ });
 
-      clearCartBtn.addEventListener("click", () => {
-        if (confirm("¿Seguro que deseas vaciar el carrito?")) {
-          CartStore.clear();
-          renderCart();
-          UI.toast("Carrito vaciado.", "info");
-        }
-      });
+ document.querySelectorAll(".btn-remove-item").forEach(btn => {
+ btn.addEventListener("click", () => {
+ const id = btn.dataset.id;
+ CartStore.removeItem(id);
+ UI.toast("Producto eliminado del carrito", "info");
+ renderCart();
+ });
+ });
+ }
 
-      checkoutBtn.addEventListener("click", () => {
-        if (!Auth.isAuthenticated()) {
-          UI.toast("Debes iniciar sesión para completar la orden.", "warning");
-          setTimeout(() => window.location.href = "login.html", 1000);
-          return;
-        }
-        window.location.href = "checkout.html";
-      });
+ clearCartBtn.addEventListener("click", () => {
+ if (confirm("¿Seguro que deseas vaciar el carrito?")) {
+ CartStore.clear();
+ renderCart();
+ UI.toast("Carrito vaciado.", "info");
+ }
+ });
 
-      renderCart();
-    });
-  </script>
+ checkoutBtn.addEventListener("click", () => {
+ if (!Auth.isAuthenticated()) {
+ UI.toast("Debes iniciar sesión para completar la orden.", "warning");
+ setTimeout(() => window.location.href = "login.html", 1000);
+ return;
+ }
+ window.location.href = "checkout.html";
+ });
+
+ renderCart();
+ });
+ </script>
 </body>
 </html>
-

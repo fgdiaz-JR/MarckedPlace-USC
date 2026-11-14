@@ -16,3 +16,4 @@ services:
         value: https://marketplace-usc-notificaciones.onrender.com/api
       - key: JWT_JWKS_URL
         value: https://xmrlazemifmepyahqsrz.supabase.co/auth/v1/.well-known/jwks.json
+

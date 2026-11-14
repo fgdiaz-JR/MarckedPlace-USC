@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Marketplace USC | Redirigiendo...</title>
-  <script src="js/config.js"></script>
-  <script src="js/auth.js"></script>
+ <meta charset="utf-8">
+ <title>Marketplace USC | Redirigiendo...</title>
+ <script src="js/config.js"></script>
+ <script src="js/auth.js"></script>
 </head>
 <body style="font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f7f5fb;">
-  <div style="text-align: center;">
-    <p style="color: #7046c8; font-weight: bold; font-size: 1.2rem;">Cargando Marketplace USC...</p>
-  </div>
-  <script>
-    if (Auth.isAuthenticated()) {
-      Auth.redirectByRole();
-    } else {
-      window.location.href = "login.html";
-    }
-  </script>
+ <div style="text-align: center;">
+ <p style="color: #7046c8; font-weight: bold; font-size: 1.2rem;">Cargando Marketplace USC...</p>
+ </div>
+ <script>
+ if (Auth.isAuthenticated()) {
+ Auth.redirectByRole();
+ } else {
+ window.location.href = "login.html";
+ }
+ </script>
 </body>
 </html>
-

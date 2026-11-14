@@ -1,186 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marketplace USC | Notificaciones</title>
-  <link rel="stylesheet" href="styles/versand.css">
-  <link rel="stylesheet" href="styles/app.css">
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Marketplace USC | Notificaciones</title>
+ <link rel="stylesheet" href="styles/versand.css">
+ <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark brand-mark-slot"></span>
-        <span>Marketplace USC</span>
-      </div>
-      <span class="side-label">Exploración</span>
-      <nav class="nav">
-        <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
-        <a href="cart.html"><button style="width:100%; text-align:left;">Mi Carrito</button></a>
-        <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
-        <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
-        <a href="notifications.html" class="active"><button class="active" style="width:100%; text-align:left;">Notificaciones</button></a>
-      </nav>
-      <div class="sidebar-footer">
-        Universidad Santiago de Cali<br>
-        <strong style="color: var(--brand)">Equipo 3: Notificaciones</strong>
-      </div>
-    </aside>
+ <div class="shell">
+ <aside class="sidebar">
+ <div class="brand">
+ <span class="brand-mark brand-mark-slot"></span>
+ <span>Marketplace USC</span>
+ </div>
+ <span class="side-label">Exploración</span>
+ <nav class="nav">
+ <a href="catalog.html"><button style="width:100%; text-align:left;">Catálogo General</button></a>
+ <a href="cart.html"><button style="width:100%; text-align:left;">Mi Carrito</button></a>
+ <a href="orders.html"><button style="width:100%; text-align:left;">Mis Pedidos</button></a>
+ <a href="tracking.html"><button style="width:100%; text-align:left;">Seguimiento</button></a>
+ <a href="notifications.html" class="active"><button class="active" style="width:100%; text-align:left;">Notificaciones</button></a>
+ </nav>
+ <div class="sidebar-footer">
+ Universidad Santiago de Cali<br>
+ <strong style="color: var(--brand)">Equipo 3: Notificaciones</strong>
+ </div>
+ </aside>
 
-    <section class="main">
-      <header class="topbar">
-        <div class="topbar-title">
-          <b>Centro de Notificaciones</b>
-          <span>Avisos de órdenes, pagos, envíos y alertas contables</span>
-        </div>
-        <div class="top-actions">
-          <button class="theme-toggle-btn icon-btn">☾</button>
-          <div class="avatar" id="headerAvatar">US</div>
-          <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
-          <button class="btn btn-soft" id="logoutBtn">Salir</button>
-        </div>
-      </header>
+ <section class="main">
+ <header class="topbar">
+ <div class="topbar-title">
+ <b>Centro de Notificaciones</b>
+ <span>Avisos de órdenes, pagos, envíos y alertas contables</span>
+ </div>
+ <div class="top-actions">
+ <button class="theme-toggle-btn icon-btn"></button>
+ <div class="avatar" id="headerAvatar">US</div>
+ <span style="font-size:13px; font-weight:700;" id="headerUserName">Usuario</span>
+ <button class="btn btn-soft" id="logoutBtn">Salir</button>
+ </div>
+ </header>
 
-      <main class="content">
-        <div class="page-head">
-          <div>
-            <span class="eyebrow">Equipo 3: Notificaciones (FastAPI Backend)</span>
-            <h1>Avisos y Eventos en Plataforma</h1>
-            <p class="lead">Actualizaciones automáticas disparadas por eventos de compras, logística y tesorería.</p>
-          </div>
-          <div class="page-actions">
-            <button class="btn btn-soft" id="markAllReadBtn">Marcar todas como leídas</button>
-          </div>
-        </div>
+ <main class="content">
+ <div class="page-head">
+ <div>
+ <span class="eyebrow">Equipo 3: Notificaciones (FastAPI Backend)</span>
+ <h1>Avisos y Eventos en Plataforma</h1>
+ <p class="lead">Actualizaciones automáticas disparadas por eventos de compras, logística y tesorería.</p>
+ </div>
+ <div class="page-actions">
+ <button class="btn btn-soft" id="markAllReadBtn">Marcar todas como leídas</button>
+ </div>
+ </div>
 
-        <div class="card panel">
-          <div class="panel-head">
-            <h2>Bandeja de Avisos</h2>
-            <span class="muted" id="notifStatusCount">Consultando avisos...</span>
-          </div>
+ <div class="card panel">
+ <div class="panel-head">
+ <h2>Bandeja de Avisos</h2>
+ <span class="muted" id="notifStatusCount">Consultando avisos...</span>
+ </div>
 
-          <div id="notifListContainer" style="display: flex; flex-direction: column; gap: 12px;">
-            <p style="text-align: center; color: var(--muted); padding: 30px;">Cargando notificaciones desde el microservicio...</p>
-          </div>
-        </div>
-      </main>
-    </section>
-  </div>
+ <div id="notifListContainer" style="display: flex; flex-direction: column; gap: 12px;">
+ <p style="text-align: center; color: var(--muted); padding: 30px;">Cargando notificaciones desde el microservicio...</p>
+ </div>
+ </div>
+ </main>
+ </section>
+ </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/ui.js"></script>
+ <script src="js/config.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/api.js"></script>
+ <script src="js/ui.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      if (!Auth.requireAuth()) return;
-      UI.initHeader("notifications");
+ <script>
+ document.addEventListener("DOMContentLoaded", async () => {
+ if (!Auth.requireAuth()) return;
+ UI.initHeader("notifications");
 
-      const user = Auth.getUser();
-      const notifListContainer = document.querySelector("#notifListContainer");
-      const notifStatusCount = document.querySelector("#notifStatusCount");
-      const markAllReadBtn = document.querySelector("#markAllReadBtn");
+ const user = Auth.getUser();
+ const notifListContainer = document.querySelector("#notifListContainer");
+ const notifStatusCount = document.querySelector("#notifStatusCount");
+ const markAllReadBtn = document.querySelector("#markAllReadBtn");
 
-      let notifications = [];
+ let notifications = [];
 
-      async function fetchNotifications() {
-        try {
-          // Primero intentamos consultar al microservicio FastAPI en el puerto 8003
-          const msUrl = `${CONFIG.services.notifications}/notificaciones/usuario/${user.id}`;
-          notifications = await API.request(msUrl).catch(async () => {
-            // Fallback directo a Supabase
-            return await API.supabaseTable("notif_mensajes", `?usuario_id=eq.${user.id}&order=creado_en.desc`);
-          });
+ async function fetchNotifications() {
+ try {
+ // Primero intentamos consultar al microservicio FastAPI en el puerto 8003
+ const msUrl = `${CONFIG.services.notifications}/notificaciones/usuario/${user.id}`;
+ notifications = await API.request(msUrl).catch(async () => {
+ // Fallback directo a Supabase
+ return await API.supabaseTable("notif_mensajes", `?usuario_id=eq.${user.id}&order=creado_en.desc`);
+ });
 
-          renderNotifications();
-        } catch (err) {
-          notifListContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: var(--muted);">
-              <h3>No hay avisos recientes</h3>
-              <p>Las notificaciones se generan automáticamente cuando compras, vendes o se actualizan tus envíos.</p>
-            </div>
-          `;
-          notifStatusCount.textContent = "0 avisos";
-        }
-      }
+ renderNotifications();
+ } catch (err) {
+ notifListContainer.innerHTML = `
+ <div style="text-align: center; padding: 40px; color: var(--muted);">
+ <h3>No hay avisos recientes</h3>
+ <p>Las notificaciones se generan automáticamente cuando compras, vendes o se actualizan tus envíos.</p>
+ </div>
+ `;
+ notifStatusCount.textContent = "0 avisos";
+ }
+ }
 
-      function getBadgeForType(tipo) {
-        const badges = {
-          "ORDEN_CREADA": '<span class="badge badge-soft">📦 Orden Creada</span>',
-          "PAGO_APROBADO": '<span class="badge badge-success">💳 Pago Aprobado</span>',
-          "PAGO_RECHAZADO": '<span class="badge badge-danger">❌ Pago Rechazado</span>',
-          "ENVIO_EN_TRANSITO": '<span class="badge badge-warning">🚚 En Tránsito</span>',
-          "ENVIO_ENTREGADO": '<span class="badge badge-success">✔ Entregado</span>',
-          "STOCK_BAJO": '<span class="badge badge-warning">⚠️ Stock Bajo</span>',
-          "ESCROW_LIBERADO": '<span class="badge badge-success">💰 Fondos Liberados</span>',
-          "INCIDENCIA_PQR": '<span class="badge badge-danger">🚨 Incidencia PQR</span>'
-        };
-        return badges[tipo] || `<span class="badge">${tipo}</span>`;
-      }
+ function getBadgeForType(tipo) {
+ const badges = {
+ "ORDEN_CREADA": '<span class="badge badge-soft"> Orden Creada</span>',
+ "PAGO_APROBADO": '<span class="badge badge-success"> Pago Aprobado</span>',
+ "PAGO_RECHAZADO": '<span class="badge badge-danger"> Pago Rechazado</span>',
+ "ENVIO_EN_TRANSITO": '<span class="badge badge-warning"> En Tránsito</span>',
+ "ENVIO_ENTREGADO": '<span class="badge badge-success"> Entregado</span>',
+ "STOCK_BAJO": '<span class="badge badge-warning"> Stock Bajo</span>',
+ "ESCROW_LIBERADO": '<span class="badge badge-success"> Fondos Liberados</span>',
+ "INCIDENCIA_PQR": '<span class="badge badge-danger"> Incidencia PQR</span>'
+ };
+ return badges[tipo] || `<span class="badge">${tipo}</span>`;
+ }
 
-      function renderNotifications() {
-        if (!Array.isArray(notifications) || notifications.length === 0) {
-          notifListContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: var(--muted);">
-              <h3>Bandeja al día</h3>
-              <p>No tienes notificaciones pendientes.</p>
-            </div>
-          `;
-          notifStatusCount.textContent = "0 avisos";
-          return;
-        }
+ function renderNotifications() {
+ if (!Array.isArray(notifications) || notifications.length === 0) {
+ notifListContainer.innerHTML = `
+ <div style="text-align: center; padding: 40px; color: var(--muted);">
+ <h3>Bandeja al día</h3>
+ <p>No tienes notificaciones pendientes.</p>
+ </div>
+ `;
+ notifStatusCount.textContent = "0 avisos";
+ return;
+ }
 
-        const unread = notifications.filter(n => !n.leido).length;
-        notifStatusCount.textContent = `${notifications.length} avisos (${unread} sin leer)`;
+ const unread = notifications.filter(n => !n.leido).length;
+ notifStatusCount.textContent = `${notifications.length} avisos (${unread} sin leer)`;
 
-        notifListContainer.innerHTML = notifications.map(n => `
-          <div class="card" style="padding: 16px 20px; border-left: 4px solid ${n.leido ? 'var(--line)' : 'var(--brand)'}; background: ${n.leido ? 'var(--surface)' : 'var(--brand-soft)'}; display: flex; justify-content: space-between; align-items: flex-start; gap: 14px;">
-            <div style="flex: 1;">
-              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-                ${getBadgeForType(n.tipo)}
-                <strong style="color: var(--ink); font-size: 14px;">${n.titulo}</strong>
-              </div>
-              <p style="font-size: 13px; color: var(--ink); line-height: 1.45; margin-bottom: 6px;">${n.mensaje}</p>
-              <span class="muted" style="font-size: 11.5px;">${API.formatDate(n.creado_en)}</span>
-            </div>
-            ${!n.leido ? `
-              <button class="btn btn-soft btn-mark-read" data-id="${n.id}" style="font-size: 11px; padding: 4px 8px; white-space: nowrap;">
-                Marcar leída
-              </button>
-            ` : ''}
-          </div>
-        `).join("");
+ notifListContainer.innerHTML = notifications.map(n => `
+ <div class="card" style="padding: 16px 20px; border-left: 4px solid ${n.leido ? 'var(--line)' : 'var(--brand)'}; background: ${n.leido ? 'var(--surface)' : 'var(--brand-soft)'}; display: flex; justify-content: space-between; align-items: flex-start; gap: 14px;">
+ <div style="flex: 1;">
+ <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+ ${getBadgeForType(n.tipo)}
+ <strong style="color: var(--ink); font-size: 14px;">${n.titulo}</strong>
+ </div>
+ <p style="font-size: 13px; color: var(--ink); line-height: 1.45; margin-bottom: 6px;">${n.mensaje}</p>
+ <span class="muted" style="font-size: 11.5px;">${API.formatDate(n.creado_en)}</span>
+ </div>
+ ${!n.leido ? `
+ <button class="btn btn-soft btn-mark-read" data-id="${n.id}" style="font-size: 11px; padding: 4px 8px; white-space: nowrap;">
+ Marcar leída
+ </button>
+ ` : ''}
+ </div>
+ `).join("");
 
-        document.querySelectorAll(".btn-mark-read").forEach(btn => {
-          btn.addEventListener("click", async () => {
-            const id = btn.dataset.id;
-            try {
-              // Actualizar en backend o Supabase
-              await API.supabaseUpdate("notif_mensajes", `?id=eq.${id}`, { leido: true, leido_en: new Date().toISOString() });
-              UI.toast("Aviso marcado como leído", "info");
-              fetchNotifications();
-            } catch (e) {
-              UI.toast("Error al actualizar", "danger");
-            }
-          });
-        });
-      }
+ document.querySelectorAll(".btn-mark-read").forEach(btn => {
+ btn.addEventListener("click", async () => {
+ const id = btn.dataset.id;
+ try {
+ // Actualizar en backend o Supabase
+ await API.supabaseUpdate("notif_mensajes", `?id=eq.${id}`, { leido: true, leido_en: new Date().toISOString() });
+ UI.toast("Aviso marcado como leído", "info");
+ fetchNotifications();
+ } catch (e) {
+ UI.toast("Error al actualizar", "danger");
+ }
+ });
+ });
+ }
 
-      markAllReadBtn.addEventListener("click", async () => {
-        try {
-          await API.supabaseUpdate("notif_mensajes", `?usuario_id=eq.${user.id}`, { leido: true, leido_en: new Date().toISOString() });
-          UI.toast("Todas las notificaciones marcadas como leídas", "success");
-          fetchNotifications();
-        } catch (e) {
-          UI.toast("Error al marcar todas", "danger");
-        }
-      });
+ markAllReadBtn.addEventListener("click", async () => {
+ try {
+ await API.supabaseUpdate("notif_mensajes", `?usuario_id=eq.${user.id}`, { leido: true, leido_en: new Date().toISOString() });
+ UI.toast("Todas las notificaciones marcadas como leídas", "success");
+ fetchNotifications();
+ } catch (e) {
+ UI.toast("Error al marcar todas", "danger");
+ }
+ });
 
-      await fetchNotifications();
-    });
-  </script>
+ await fetchNotifications();
+ });
+ </script>
 </body>
 </html>
-

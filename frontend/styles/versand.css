@@ -5,17 +5,17 @@
 /* Seguimiento expandido del pedido */
 .mobile-login-toggle{display:none}
 @media(max-width:700px){
-  .login{display:block;min-height:100vh}
-  .login-visual{display:block;min-height:100vh;padding:28px 24px}
-  .login-visual .brand{justify-content:flex-start}
-  .mobile-login-toggle{display:block;margin-left:auto;padding:10px 14px;border:1px solid rgba(255,255,255,.45);border-radius:9px;color:#fff;background:rgba(255,255,255,.14);font-size:12px;font-weight:800}
-  .visual-copy{margin-top:24vh}
-  .visual-copy h1{font-size:clamp(38px,11vw,52px)}
-  .visual-stats{gap:20px;margin-top:35px}
-  .login-panel{display:none;position:fixed;inset:0;z-index:10;overflow-y:auto;min-height:100vh;padding:28px 20px;background:var(--canvas)}
-  .login.is-login-open .login-visual{display:none}
-  .login.is-login-open .login-panel{display:grid}
-  .login-box{padding:8px 0}
+ .login{display:block;min-height:100vh}
+ .login-visual{display:block;min-height:100vh;padding:28px 24px}
+ .login-visual .brand{justify-content:flex-start}
+ .mobile-login-toggle{display:block;margin-left:auto;padding:10px 14px;border:1px solid rgba(255,255,255,.45);border-radius:9px;color:#fff;background:rgba(255,255,255,.14);font-size:12px;font-weight:800}
+ .visual-copy{margin-top:24vh}
+ .visual-copy h1{font-size:clamp(38px,11vw,52px)}
+ .visual-stats{gap:20px;margin-top:35px}
+ .login-panel{display:none;position:fixed;inset:0;z-index:10;overflow-y:auto;min-height:100vh;padding:28px 20px;background:var(--canvas)}
+ .login.is-login-open .login-visual{display:none}
+ .login.is-login-open .login-panel{display:grid}
+ .login-box{padding:8px 0}
 }
 .order-row[data-order]{cursor:pointer}.order-row[data-order]:hover{border-color:var(--brand);background:var(--brand-soft)}
 .orders-panel{margin-top:17px}.order-summary{min-width:0}.order-meta{margin-top:5px;color:var(--muted);font-size:11px}.order-row{align-items:center}.order-detail-backdrop{padding:22px;overflow-y:auto}.order-detail{width:min(980px,100%);max-height:calc(100vh - 44px);overflow-y:auto;padding:28px}.order-detail-header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line)}.order-detail-header h2{margin:5px 0 3px;font-size:28px}.order-detail-header p{margin:0;color:var(--muted);font-size:13px}.order-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}.detail-eta{display:grid;gap:5px;padding:16px;border-radius:12px;background:var(--brand-soft)}.detail-eta strong{font-size:18px}.detail-section{margin-top:22px}.detail-section:first-child{margin-top:0}.detail-section h3{margin-bottom:14px;font-size:15px}.detail-section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}.detail-section-heading h3{margin-bottom:0}.detail-map-column .map-visual{min-height:290px}.detail-support{width:100%;margin-top:18px}.order-detail .timeline{margin-top:0}.order-detail .info-row{padding:11px 0}.order-detail .map-caption{font-size:11px}@media(max-width:760px){.order-detail-backdrop{padding:10px}.order-detail{max-height:calc(100vh - 20px);padding:20px}.order-detail-grid{grid-template-columns:1fr;gap:8px}.order-detail-header{align-items:flex-start}.order-detail-header h2{font-size:24px}.order-row{grid-template-columns:1fr auto}.order-row .order-date{grid-column:1/-1}.order-row button{grid-column:2;grid-row:1/3}}
@@ -36,7 +36,7 @@
 .field-success-msg { color: var(--success); font-size: 11px; margin-top: 4px; font-weight: 700; display: block; }
 .perf-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; background: var(--success-soft); color: var(--success); font-size: 11px; font-weight: 800; }
 @media print {
-  body * { visibility: hidden !important; }
-  .shipping-label, .shipping-label * { visibility: visible !important; }
-  .shipping-label { position: absolute; left: 0; top: 0; width: 100%; border: 2px solid #000; box-shadow: none; }
+ body * { visibility: hidden !important; }
+ .shipping-label, .shipping-label * { visibility: visible !important; }
+ .shipping-label { position: absolute; left: 0; top: 0; width: 100%; border: 2px solid #000; box-shadow: none; }
 }
