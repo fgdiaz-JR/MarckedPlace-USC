@@ -7,6 +7,13 @@ class ContabilidadService:
  @staticmethod
  def crear_retencion_escrow(data: EscrowCreate):
  db = get_db()
+
+ # IDEMPOTENCIA: si ya existe un escrow para este pedido, devolver el existente
+ # Protege contra reintentos del Equipo 1 que llamen dos veces al confirmar la orden
+ existing = db.table("cont_escrow").select("*").eq("pedido_id", str(data.pedido_id)).execute()
+ if existing.data:
+     return existing.data[0]
+
  pct = settings.PLATFORM_COMMISSION_PERCENT # 5.0%
  comision = round(data.monto_bruto * (pct / 100.0), 2)
  neto = round(data.monto_bruto - comision, 2)
