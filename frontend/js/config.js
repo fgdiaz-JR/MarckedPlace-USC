@@ -33,8 +33,8 @@ const CONFIG = {
  // Equipo 6: Contabilidad, Conciliación y Escrow (Desarrollado por nosotros en FastAPI - Desplegado en Render)
  accounting: localStorage.getItem("USC_API_ACCOUNTING") || "https://marketplace-usc-contabilidad.onrender.com/api",
 
- // Equipo 7: Catálogo
- catalog: localStorage.getItem("USC_API_CATALOG") || "http://localhost:8007/api"
+ // Equipo 7: Catálogo (Desplegado en Render)
+ catalog: localStorage.getItem("USC_API_CATALOG") || "https://marketplace-usc-catalogo.onrender.com/api"
  },
 
  // Reglas de negocio fijadas por la cátedra
