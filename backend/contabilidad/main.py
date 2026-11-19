@@ -1,6 +1,7 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
+from auth_utils import require_role
 
 from schemas import (
  EscrowCreate,
@@ -117,11 +118,13 @@ def bloquear_fondos(pedido_id: str, payload: BloquearEscrowRequest):
 @app.get(
  "/api/contabilidad/resumen-general",
  response_model=ResumenFinancieroAdmin,
- tags=["Reportes Contables"]
+ tags=["Reportes Contables"],
+ dependencies=[Depends(require_role("ADMIN"))]
 )
 def obtener_resumen_admin():
  """
- Retorna los totales consolidados para el Administrador:
+ Retorna los totales consolidados para el Administrador.
+ PROTEGIDO: requiere claim app_metadata.role = ADMIN en el JWT (firmado por Supabase service_role).
  Ventas brutas, 5% comisiones ganadas, fondos retenidos y liberados.
  """
  try:
