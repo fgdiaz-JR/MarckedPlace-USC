@@ -24,8 +24,8 @@ const CONFIG = {
  // Equipo 3: Notificaciones (Desarrollado por nosotros en FastAPI - Desplegado en Render)
  notifications: localStorage.getItem("USC_API_NOTIFICATIONS") || "https://marketplace-usc-notificaciones.onrender.com/api",
 
- // Equipo 4: Productos, Inventario y Carrito
- inventory: localStorage.getItem("USC_API_INVENTORY") || "http://localhost:8004/api",
+ // Equipo 4: Productos, Inventario y Carrito (Desplegado en Render)
+ inventory: localStorage.getItem("USC_API_INVENTORY") || "https://marketplace-equipo4.onrender.com/api",
 
  // Equipo 5: Seguimiento de Entregas y Transportadoras (Desplegado en Render)
  tracking: localStorage.getItem("USC_API_TRACKING") || "https://marketplace-usc-seguimiento.onrender.com/api",
