@@ -16,10 +16,10 @@ const CONFIG = {
  // Al desplegar en Render / Vercel, solo se actualizan estas URLs o se leen desde localStorage
  services: {
  // Equipo 1: Órdenes de Pedido y Envíos vinculados
- orders: localStorage.getItem("USC_API_ORDERS") || "http://localhost:8001/api",
+ orders: localStorage.getItem("USC_API_ORDERS") || "https://ordenes-thaliana.onrender.com/api",
 
  // Equipo 2: Pasarela de Pago (PSE, QR, COD)
- payments: localStorage.getItem("USC_API_PAYMENTS") || "http://localhost:8002/api",
+ payments: localStorage.getItem("USC_API_PAYMENTS") || "https://marketplace-usc-pagos-staging.onrender.com/api",
 
  // Equipo 3: Notificaciones (Desarrollado por nosotros en FastAPI - Desplegado en Render)
  notifications: localStorage.getItem("USC_API_NOTIFICATIONS") || "https://marketplace-usc-notificaciones.onrender.com/api",
