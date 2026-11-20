@@ -18,7 +18,9 @@ class EscrowCreate(BaseModel):
  pedido_id: str = Field(..., description="UUID de la orden de pedido")
  vendedor_id: str = Field(..., description="UUID del vendedor titular")
  comprador_id: str = Field(..., description="UUID del comprador")
- monto_bruto: float = Field(..., ge=0, description="Valor total pagado por el comprador en COP")
+ monto_subtotal: float = Field(..., ge=0, description="Subtotal de productos sin envío (base del 5% de comisión)")
+ monto_envio: float = Field(default=0.0, ge=0, description="Costo de envío (no entra en comisión)")
+ monto_bruto: float = Field(..., ge=0, description="Total pagado por el comprador = subtotal + envío")
 
 class EscrowResponse(BaseModel):
  id: str
@@ -35,7 +37,6 @@ class EscrowResponse(BaseModel):
  fecha_limite_liberacion: Optional[datetime] = None
  fecha_liberacion_real: Optional[datetime] = None
  creado_en: datetime
-
 class LiberarEscrowRequest(BaseModel):
  motivo: MotivoLiberacion = Field(default=MotivoLiberacion.CONFORMIDAD_CLIENTE)
  observaciones: Optional[str] = None

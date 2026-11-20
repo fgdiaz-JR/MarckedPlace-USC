@@ -27,6 +27,7 @@ JWT_JWKS_URL: str = os.getenv(
 # Estados válidos del ciclo de vida de un envío
 ESTADOS_VALIDOS = [
  "PENDIENTE",
+ "PENDIENTE_DESPACHO",   # COD: anticipo aprobado, esperando que vendedor prepare
  "RECOGIDO",
  "EN_TRANSITO",
  "EN_DESTINO",

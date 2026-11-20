@@ -15,7 +15,8 @@ class ContabilidadService:
      return existing.data[0]
 
  pct = settings.PLATFORM_COMMISSION_PERCENT # 5.0%
- comision = round(data.monto_bruto * (pct / 100.0), 2)
+ # Comisión solo sobre subtotal (sin envío), redondeado al entero en COP
+ comision = round(data.monto_subtotal * (pct / 100.0), 0)
  neto = round(data.monto_bruto - comision, 2)
 
  payload = {
@@ -40,7 +41,7 @@ class ContabilidadService:
  "monto": data.monto_bruto,
  "saldo_anterior": 0.0,
  "saldo_nuevo": data.monto_bruto,
- "descripcion": f"Retención en custodia Escrow por orden {data.pedido_id} (Neto: ${neto:,.0f}, Comisión 5%: ${comision:,.0f})"
+ "descripcion": f"Retención Escrow orden {data.pedido_id} | Subtotal: ${data.monto_subtotal:,.0f} | Envío: ${data.monto_envio:,.0f} | Comisión 5%: ${comision:,.0f} | Neto vendedor: ${neto:,.0f}"
  }).execute()
 
  return escrow

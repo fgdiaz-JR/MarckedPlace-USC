@@ -18,8 +18,8 @@ async def _notify(tipo: str, destinatario_id: str, titulo: str, mensaje: str, re
  """Envía una notificación al Módulo 3 (Notificaciones)."""
  try:
  payload = {
+ "usuario_id": destinatario_id,   # Módulo 3 espera "usuario_id"
  "tipo": tipo,
- "destinatario_id": destinatario_id,
  "titulo": titulo,
  "mensaje": mensaje,
  "referencia_id": referencia_id,
