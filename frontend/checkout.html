@@ -309,7 +309,8 @@
  }).catch(() => {});
 
  // 4. Crear retención en cont_escrow (Equipo 6)
- const comision5Pct = Math.round(totals.total * 0.05);
+ // Regla: 5% sobre subtotal de productos (sin envio ni IVA)
+  const comision5Pct = Math.round(totals.subtotal * 0.05);
  const netoVendedor = totals.total - comision5Pct;
 
  await API.supabaseInsert("cont_escrow", {
@@ -317,6 +318,8 @@
  vendedor_id: vendedorId,
  comprador_id: user.id,
  monto_bruto: totals.total,
+ monto_subtotal: totals.subtotal,
+ monto_envio: totals.costoEnvio,
  porcentaje_comision: 5.00,
  comision_plataforma: comision5Pct,
  monto_neto_vendedor: netoVendedor,
